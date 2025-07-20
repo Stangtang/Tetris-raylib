@@ -37,9 +37,9 @@ private:
 
 	using Clock = std::chrono::steady_clock;
 	using TimePoint = std::chrono::time_point<Clock>;
-	std::chrono::milliseconds moveDelay{ 80 };
+	std::chrono::milliseconds moveDelay{ 110 };
 	std::chrono::milliseconds rotateDelay{ 180 };
-	std::chrono::milliseconds softDropDelay{ 120 };
+	std::chrono::milliseconds softDropDelay{ 110 };
 	TimePoint lastMoveLeftTime = Clock::now();
 	TimePoint lastMoveRightTime = Clock::now();
 	TimePoint lastMoveDownTime = Clock::now();

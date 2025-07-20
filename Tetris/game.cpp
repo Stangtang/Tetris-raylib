@@ -51,8 +51,6 @@ void Game::Draw()
 	currentPiece.Draw();
 }
 
-
-
 void Game::HandleInput()
 {
 	TimePoint now = Clock::now();
