@@ -9,17 +9,20 @@ Game::Game()
 	nextPiece = GetRandomPiece();
 	gameOverFlag = false;
 	score = 0;
+
 	InitAudioDevice();
 	rotateSound = LoadSound("Sounds/rotate1.wav");
 	clearSound = LoadSound("Sounds/clear1.wav");
-	SetSoundVolume(clearSound, 0.3);
-
+	SetSoundVolume(clearSound, 0.5);
+	gameoverSound = LoadSound("Sounds/game_over1.wav");
+	SetSoundVolume(gameoverSound, 0.5);
 }
 
 Game::~Game()
 {
 	UnloadSound(rotateSound);
 	UnloadSound(clearSound);
+	UnloadSound(gameoverSound);
 	CloseAudioDevice();
 }
 
@@ -198,6 +201,7 @@ void Game::AnchorPiece()
 	if (IsPieceOverlapping())
 	{
 		gameOverFlag = true;
+		PlaySound(gameoverSound);
 	}
 	nextPiece = GetRandomPiece();
 

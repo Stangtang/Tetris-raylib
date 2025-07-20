@@ -147,6 +147,7 @@
   <ItemGroup>
     <Media Include="Sounds\clear1.wav" />
     <Media Include="Sounds\clear2.mp3" />
+    <Media Include="Sounds\game_over1.wav" />
     <Media Include="Sounds\rotate1.wav" />
     <Media Include="Sounds\rotate2.mp3" />
   </ItemGroup>
