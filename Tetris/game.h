@@ -2,6 +2,8 @@
 
 #include "grid.h"
 #include "pieces.cpp"
+#include <chrono>
+
 class Game
 {
 public:
@@ -29,6 +31,17 @@ private:
 	void AnchorPiece();
 	bool IsPieceOverlapping();
 	void updateScore(int linesCleared, int timesMovedDown);
+
 	Sound rotateSound;
 	Sound clearSound;
+
+	using Clock = std::chrono::steady_clock;
+	using TimePoint = std::chrono::time_point<Clock>;
+	std::chrono::milliseconds moveDelay{ 80 };
+	std::chrono::milliseconds rotateDelay{ 180 };
+	std::chrono::milliseconds softDropDelay{ 120 };
+	TimePoint lastMoveLeftTime = Clock::now();
+	TimePoint lastMoveRightTime = Clock::now();
+	TimePoint lastMoveDownTime = Clock::now();
+	TimePoint lastRotateTime = Clock::now();
 };

@@ -20,7 +20,7 @@ public:
 
 private:
 	int cellSize;
-	int rotationState;
+	int rotation;
 	std::vector<Color> colors;
 	int rowOffset;
 	int colOffset;

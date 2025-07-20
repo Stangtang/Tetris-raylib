@@ -3,15 +3,15 @@
 #include <chrono>
 #include "text.h"
 
-auto LastPieceLoweringTime = std::chrono::steady_clock::now();
-bool ShouldLowerPiece(std::chrono::steady_clock::time_point& LastPieceLoweringTime)
+auto lastPieceLoweringTime = std::chrono::steady_clock::now();
+bool ShouldLowerPiece(std::chrono::steady_clock::time_point& lastPieceLoweringTime)
 {
 	using namespace std::chrono;
 	auto now = steady_clock::now();
-	auto elapsed = duration_cast<milliseconds>(now - LastPieceLoweringTime);
+	auto elapsed = duration_cast<milliseconds>(now - lastPieceLoweringTime);
 
 	if (elapsed.count() >= 600) { // lower piece every 600 ms
-		LastPieceLoweringTime = now;
+		lastPieceLoweringTime = now;
 		return true;
 	}
 	return false;
@@ -29,7 +29,7 @@ int main()
 	while (!WindowShouldClose())
 	{
 		game.HandleInput();
-		if (ShouldLowerPiece(LastPieceLoweringTime))
+		if (ShouldLowerPiece(lastPieceLoweringTime))
 		{
 			game.MovePieceDown();
 		}

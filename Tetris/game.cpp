@@ -55,35 +55,68 @@ void Game::Draw()
 
 void Game::HandleInput()
 {
-	int inputKey = GetKeyPressed();
+	TimePoint now = Clock::now();
 
-	if (gameOverFlag && inputKey == KEY_Z)
+	if (gameOverFlag && IsKeyPressed(KEY_Z))
 	{
 		resetGame();
+		return;
 	}
 
-	switch (inputKey)
+	if (IsKeyDown(KEY_LEFT) && now - lastMoveLeftTime > moveDelay)
 	{
-	case KEY_LEFT:
 		MovePieceLeft();
-		break;
-	case KEY_RIGHT:
+		lastMoveLeftTime = now;
+	}
+	if (IsKeyDown(KEY_RIGHT) && now - lastMoveRightTime > moveDelay)
+	{
 		MovePieceRight();
-		break;
-	case KEY_DOWN:
+		lastMoveRightTime = now;
+	}
+	if (IsKeyDown(KEY_DOWN) && now - lastMoveDownTime > softDropDelay)
+	{
 		MovePieceDown();
 		updateScore(0, 1);
-		break;
-	case KEY_Z:
-		RotatePiece();
-		break;
-	case KEY_X:
-		DropPiece();
-		break;
-	case KEY_R:
-		resetGame();
-		break;
+		lastMoveDownTime = now;
 	}
+	if (IsKeyDown(KEY_Z) && now - lastRotateTime > rotateDelay)
+	{
+		RotatePiece();
+		lastRotateTime = now;
+	}
+
+	if (IsKeyPressed(KEY_X))
+	{
+		DropPiece();
+	}
+
+	if (IsKeyPressed(KEY_R))
+	{
+		resetGame();
+	}
+
+	//switch (inputKey)
+	//{
+	//case KEY_LEFT:
+	//	MovePieceLeft();
+	//	break;
+	//case KEY_RIGHT:
+	//	MovePieceRight();
+	//	break;
+	//case KEY_DOWN:
+	//	MovePieceDown();
+	//	updateScore(0, 1);
+	//	break;
+	//case KEY_Z:
+	//	RotatePiece();
+	//	break;
+	//case KEY_X:
+	//	DropPiece();
+	//	break;
+	//case KEY_R:
+	//	resetGame();
+	//	break;
+	//}
 }
 
 void Game::MovePieceLeft()
@@ -176,6 +209,8 @@ void Game::AnchorPiece()
 		PlaySound(clearSound);
 		updateScore(linesCleared, 0);
 	}
+
+	// lastMoveLeftTime = lastMoveRightTime = lastMoveDownTime = lastRotateTime = Clock::now();
 }
 
 bool Game::IsPieceOverlapping()
@@ -199,6 +234,7 @@ void Game::resetGame()
 	nextPiece = GetRandomPiece();
 	gameOverFlag = false;
 	score = 0;
+	// lastMoveLeftTime = lastMoveRightTime = lastMoveDownTime = lastRotateTime = Clock::now();
 }
 
 void Game::updateScore(int linesCleared, int timesMovedDown)

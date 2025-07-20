@@ -4,7 +4,7 @@
 Piece::Piece()
 {
 	cellSize = 40;
-	rotationState = 0;
+	rotation = 0;
 	colors = GetColors();
 	rowOffset = 0;
 	colOffset = 0;
@@ -36,19 +36,19 @@ void Piece::Move(int rows, int cols)
 
 void Piece::Rotate()
 {
-	rotationState++;
-	if (rotationState >= cells.size()) rotationState = 0;
+	rotation++;
+	if (rotation >= cells.size()) rotation = 0;
 }
 
 void Piece::UndoRotation()
 {
-	rotationState--;
-	if (rotationState < 0) rotationState = cells.size() - 1;
+	rotation--;
+	if (rotation < 0) rotation = cells.size() - 1;
 }
 
 std::vector<Position> Piece::GetCellPositions()
 {
-	std::vector<Position> cellPositions = cells[rotationState];
+	std::vector<Position> cellPositions = cells[rotation];
 	std::vector<Position> movedTiles;
 	for (Position pos : cellPositions)
 	{
