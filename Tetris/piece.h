@@ -1,0 +1,27 @@
+#pragma once
+
+#include "position.h"
+#include <vector>
+#include <map>
+#include "colors.h"
+
+class Piece
+{
+public:
+	Piece();
+	int type;
+	void Draw();
+	void Draw(int offsetX, int offsetY);
+	void Move(int rows, int cols);
+	void Rotate();
+	void UndoRotation();
+	std::vector<Position> GetCellPositions();
+	std::map<int, std::vector<Position>> cells;
+
+private:
+	int cellSize;
+	int rotationState;
+	std::vector<Color> colors;
+	int rowOffset;
+	int colOffset;
+};
