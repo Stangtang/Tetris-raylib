@@ -35,12 +35,12 @@ Piece Game::GetRandomPiece()
 
 	std::random_device rd;
 	std::mt19937 gen(rd());
-	std::uniform_int_distribution<> randBlock(0, Pieces.size() - 1);
+	std::uniform_int_distribution<> randPiece(0, Pieces.size() - 1);
 
-	int randomIndex = randBlock(gen);
-	Piece block = Pieces[randomIndex];
+	int randomIndex = randPiece(gen);
+	Piece piece = Pieces[randomIndex];
 	Pieces.erase(Pieces.begin() + randomIndex);
-	return block;
+	return piece;
 }
 
 std::vector<Piece> Game::GetAllPieces()
@@ -95,29 +95,6 @@ void Game::HandleInput()
 	{
 		resetGame();
 	}
-
-	//switch (inputKey)
-	//{
-	//case KEY_LEFT:
-	//	MovePieceLeft();
-	//	break;
-	//case KEY_RIGHT:
-	//	MovePieceRight();
-	//	break;
-	//case KEY_DOWN:
-	//	MovePieceDown();
-	//	updateScore(0, 1);
-	//	break;
-	//case KEY_Z:
-	//	RotatePiece();
-	//	break;
-	//case KEY_X:
-	//	DropPiece();
-	//	break;
-	//case KEY_R:
-	//	resetGame();
-	//	break;
-	//}
 }
 
 void Game::MovePieceLeft()
@@ -179,10 +156,10 @@ void Game::DropPiece()
 
 bool Game::IsPieceOutsideGrid()
 {
-	std::vector<Position> tiles = currentPiece.GetCellPositions();
-	for (Position item : tiles)
+	std::vector<Position> cellPositions = currentPiece.GetCellPositions();
+	for (Position pos : cellPositions)
 	{
-		if (grid.IsCellOutsideGrid(item.row, item.col))
+		if (grid.IsCellOutsideGrid(pos.row, pos.col))
 		{
 			return true;
 		}
@@ -192,10 +169,10 @@ bool Game::IsPieceOutsideGrid()
 
 void Game::AnchorPiece()
 {
-	std::vector<Position> tiles = currentPiece.GetCellPositions();
-	for (Position item : tiles)
+	std::vector<Position> cellPositions = currentPiece.GetCellPositions();
+	for (Position pos : cellPositions)
 	{
-		grid.grid[item.row][item.col] = currentPiece.type;
+		grid.grid[pos.row][pos.col] = currentPiece.type;
 	}
 	currentPiece = nextPiece;
 	if (IsPieceOverlapping())
@@ -217,10 +194,10 @@ void Game::AnchorPiece()
 
 bool Game::IsPieceOverlapping()
 {
-	std::vector<Position> tiles = currentPiece.GetCellPositions();
-	for (Position item : tiles)
+	std::vector<Position> cellPositions = currentPiece.GetCellPositions();
+	for (Position pos : cellPositions)
 	{
-		if (!grid.IsCellEmpty(item.row, item.col))
+		if (!grid.IsCellEmpty(pos.row, pos.col))
 		{
 			return true;
 		}
