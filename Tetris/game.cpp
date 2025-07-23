@@ -274,8 +274,3 @@ bool Game::ShouldLowerPiece()
 	}
 	return false;
 }
-
-std::chrono::milliseconds Game::GetAutoDropInterval()
-{
-	return autoDropInterval;
-}

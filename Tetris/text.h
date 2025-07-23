@@ -18,6 +18,7 @@ extern Vector2 gameOverTextSize;
 void LoadFonts();
 void UnloadFonts();
 void DrawOutlinedText(Font font, const char* text, Vector2 position, const float& fontSize, const float& spacing, Color color, const int& outlineSize, Color outlineColor);
+void DrawSidePanel(const Game& game);
 void DrawScore(const Game& game);
 void DrawNext(const Game& game);
 void DrawHeld(const Game& game, const bool& heldPieceExists);

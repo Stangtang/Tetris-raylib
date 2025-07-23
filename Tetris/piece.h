@@ -11,7 +11,7 @@ public:
 	Piece();
 	int type;
 	void Draw();
-	void Draw(int XOffset, int YOffset);
+	void Draw(int pixelOffsetX, int pixelOffsetY);
 	void Move(int rows, int cols);
 	void Rotate();
 	void UndoRotation();

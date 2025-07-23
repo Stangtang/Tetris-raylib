@@ -23,7 +23,6 @@ public:
 	bool canHoldPiece;
 	bool gameOverFlag;
 	unsigned long long score;
-	std::chrono::milliseconds GetAutoDropInterval();
 
 private:
 	std::mt19937 randomPieceEngine;

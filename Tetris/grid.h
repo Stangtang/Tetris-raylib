@@ -8,7 +8,6 @@ class Grid
 public:
 	Grid();
 	void Init();
-	void Print();
 	void Draw();
 	bool IsCellOutsideGrid(int row, int col);
 	bool IsCellEmpty(int row, int col);

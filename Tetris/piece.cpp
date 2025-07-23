@@ -20,12 +20,12 @@ void Piece::Draw()
 	}
 }
 
-void Piece::Draw(int offsetX, int offsetY)
+void Piece::Draw(int pixelOffsetX, int pixelOffsetY)
 {
 	std::vector<Position> cellPositions = GetCellPositions();
 	for (const Position& pos : cellPositions)
 	{
-		DrawRectangle(pos.col * cellSize + offsetX, pos.row * cellSize + offsetY, cellSize - 1, cellSize - 1, colors[type]);
+		DrawRectangle(pos.col * cellSize + pixelOffsetX, pos.row * cellSize + pixelOffsetY, cellSize - 1, cellSize - 1, colors[type]);
 	}
 }
 

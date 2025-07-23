@@ -22,18 +22,6 @@ void Grid::Init()
 	}
 }
 
-void Grid::Print()
-{
-	for (size_t row = 0; row < numRows; row++)
-	{
-		for (size_t col = 0; col < numCols; col++)
-		{
-			std::cout << grid[row][col] << " ";
-		}
-		std::cout << std::endl;
-	}
-}
-
 void Grid::Draw()
 {
 	for (size_t row = 0; row < numRows; row++)

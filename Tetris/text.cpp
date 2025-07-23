@@ -1,6 +1,5 @@
 #include "text.h"
 #include <iostream>
-#include "game.h"
 
 const int fontSize = 50;
 Font font;
@@ -48,39 +47,46 @@ void DrawOutlinedText(Font font, const char* text, Vector2 position, const float
 	DrawTextEx(font, text, position, fontSize, spacing, color);
 }
 
+void DrawSidePanel(const Game& game)
+{
+	DrawScore(game);
+	DrawNext(game);
+	DrawHeld(game, game.heldPieceExists);
+}
+
 void DrawScore(const Game& game)
 {
-	DrawTextEx(font, "Score", { 540 - scoreTextSize.x / 2, 15 }, fontSize, 2, BLACK);
-	DrawRectangleRounded({ 540 - 225 / 2, 80, 225, 80 }, 0.3, 6, GRAY);
+	DrawTextEx(font, "Score", { 540 - scoreTextSize.x / 2, 5 }, fontSize, 2, BLACK);
+	DrawRectangleRounded({ 540 - 225 / 2, 70, 225, 80 }, 0.3, 6, GRAY);
 	char scoreNumberText[10];
 	snprintf(scoreNumberText, sizeof(scoreNumberText), "%d", game.score);
-	DrawTextEx(scoreFont, scoreNumberText, { 540 - MeasureTextEx(scoreFont, scoreNumberText, scoreFontSize, 2).x / 2, (80 + 80) / 2 + 13 }, scoreFontSize, 2, BLACK);
+	DrawTextEx(scoreFont, scoreNumberText, { 540 - MeasureTextEx(scoreFont, scoreNumberText, scoreFontSize, 2).x / 2, (70 + 80) / 2 + 13 }, scoreFontSize, 2, BLACK);
 }
 
 void DrawNext(const Game& game)
 {
-	DrawTextEx(font, "Next", { 540 - nextTextSize.x / 2, 200 }, fontSize, 2, BLACK);
-	DrawRectangleRounded({ 540 - 225 / 2, 200 + 65, 225, 225 }, 0.3, 6, GRAY);
+	DrawTextEx(font, "Next", { 540 - nextTextSize.x / 2, 190 }, fontSize, 2, BLACK);
+	DrawRectangleRounded({ 540 - 225 / 2, 190 + 65, 225, 225 }, 0.3, 6, GRAY);
 
 	Piece piece = game.nextPiece;
 	switch (piece.type)
 	{
 	case 3: // I-piece
-		piece.Draw(360 - 18, 380);
+		piece.Draw(360 - 19, 370 - 22);
 		break;
 	case 4: // O-piece
-		piece.Draw(360 - 15, 340);
+		piece.Draw(360 - 19, 330 - 2);
 		break;
 	default:
-		piece.Draw(360, 340);
+		piece.Draw(360 + 1, 330 - 2);
 		break;
 	}
 }
 
 void DrawHeld(const Game& game, const bool& heldPieceExists)
 {
-	DrawTextEx(font, "Held", { 540 - heldTextSize.x / 2, 525 }, fontSize, 2, BLACK);
-	DrawRectangleRounded({ 540 - 225 / 2, 525 + 65, 225, 225 }, 0.3, 6, GRAY);
+	DrawTextEx(font, "Held", { 540 - heldTextSize.x / 2, 515 }, fontSize, 2, BLACK);
+	DrawRectangleRounded({ 540 - 225 / 2, 515 + 65, 225, 225 }, 0.3, 6, GRAY);
 
 	if (!heldPieceExists) return;
 
@@ -88,13 +94,13 @@ void DrawHeld(const Game& game, const bool& heldPieceExists)
 	switch (piece.type)
 	{
 	case 3: // I-piece
-		piece.Draw(360 - 18, 380 + 325);
+		piece.Draw(360 - 19, 370 - 22 + 325);
 		break;
 	case 4: // O-piece
-		piece.Draw(360 - 15, 340 + 325);
+		piece.Draw(360 - 19, 330 - 2 + 325);
 		break;
 	default:
-		piece.Draw(360, 340 + 325);
+		piece.Draw(360 + 1, 330 - 2 + 325);
 		break;
 	}
 }

@@ -15,18 +15,13 @@ int main()
 
 	while (!WindowShouldClose())
 	{
-		std::cout << game.GetAutoDropInterval().count() << std::endl;
-
 		game.HandleInput();
-
 		game.AutoDropPiece();
 
 		BeginDrawing();
 			ClearBackground(LIGHTGRAY);
 
-			DrawScore(game); 
-			DrawNext(game);
-			DrawHeld(game, game.heldPieceExists);
+			DrawSidePanel(game);
 
 			game.Draw();
 
