@@ -13,8 +13,11 @@ public:
 	void HandleInput();
 	void MovePieceDown();
 	void DropPiece();
+	void HoldPiece();
 	Piece currentPiece;
 	Piece nextPiece;
+	Piece heldPiece;
+	bool heldPieceExists;
 	bool gameOverFlag;
 	int score;
 
@@ -24,13 +27,13 @@ private:
 	void MovePieceLeft();
 	void MovePieceRight();
 	Grid grid;
-	void resetGame();
+	void ResetGame();
 	std::vector<Piece> Pieces;
 	bool IsPieceOutsideGrid();
 	void RotatePiece();
 	void AnchorPiece();
 	bool IsPieceOverlapping();
-	void updateScore(int linesCleared, int timesMovedDown);
+	void UpdateScore(int linesCleared, int timesMovedDown);
 
 	Sound rotateSound;
 	Sound clearSound;

@@ -6,10 +6,10 @@ public:
 	LPiece()
 	{
 		type = 1;
-		cells[0] = { Position(0, 2), Position(1, 0), Position(1, 1), Position(1, 2) };
-		cells[1] = { Position(0, 1), Position(1, 1), Position(2, 1), Position(2, 2) };
-		cells[2] = { Position(1, 0), Position(1, 1), Position(1, 2), Position(2, 0) };
-		cells[3] = { Position(0, 0), Position(0, 1), Position(1, 1), Position(2, 1) };
+		occupiedCells[0] = { Position(0, 2), Position(1, 0), Position(1, 1), Position(1, 2) };
+		occupiedCells[1] = { Position(0, 1), Position(1, 1), Position(2, 1), Position(2, 2) };
+		occupiedCells[2] = { Position(1, 0), Position(1, 1), Position(1, 2), Position(2, 0) };
+		occupiedCells[3] = { Position(0, 0), Position(0, 1), Position(1, 1), Position(2, 1) };
 		Move(0, 3);
 	}
 };
@@ -19,10 +19,10 @@ public:
 	JPiece()
 	{
 		type = 2;
-		cells[0] = { Position(0, 0), Position(1, 0), Position(1, 1), Position(1, 2) };
-		cells[1] = { Position(0, 1), Position(0, 2), Position(1, 1), Position(2, 1) };
-		cells[2] = { Position(1, 0), Position(1, 1), Position(1, 2), Position(2, 2) };
-		cells[3] = { Position(0, 1), Position(1, 1), Position(2, 0), Position(2, 1) };
+		occupiedCells[0] = { Position(0, 0), Position(1, 0), Position(1, 1), Position(1, 2) };
+		occupiedCells[1] = { Position(0, 1), Position(0, 2), Position(1, 1), Position(2, 1) };
+		occupiedCells[2] = { Position(1, 0), Position(1, 1), Position(1, 2), Position(2, 2) };
+		occupiedCells[3] = { Position(0, 1), Position(1, 1), Position(2, 0), Position(2, 1) };
 		Move(0, 3);
 	}
 };
@@ -36,10 +36,10 @@ public:
 		//cells[2] = { Position(0, 2), Position(1, 2), Position(2, 2), Position(3, 2) };
 		//cells[3] = { Position(2, 0), Position(2, 1), Position(2, 2), Position(2, 3) };
 		//cells[0] = { Position(0, 1), Position(1, 1), Position(2, 1), Position(3, 1) };
-		cells[0] = { Position(1, 0), Position(1, 1), Position(1, 2), Position(1, 3) };
-		cells[1] = { Position(0, 2), Position(1, 2), Position(2, 2), Position(3, 2) };
-		cells[2] = { Position(2, 0), Position(2, 1), Position(2, 2), Position(2, 3) };
-		cells[3] = { Position(0, 1), Position(1, 1), Position(2, 1), Position(3, 1) };
+		occupiedCells[0] = { Position(1, 0), Position(1, 1), Position(1, 2), Position(1, 3) };
+		occupiedCells[1] = { Position(0, 2), Position(1, 2), Position(2, 2), Position(3, 2) };
+		occupiedCells[2] = { Position(2, 0), Position(2, 1), Position(2, 2), Position(2, 3) };
+		occupiedCells[3] = { Position(0, 1), Position(1, 1), Position(2, 1), Position(3, 1) };
 		Move(-1, 3);
 	}
 };
@@ -49,7 +49,7 @@ public:
 	OPiece()
 	{
 		type = 4;
-		cells[0] = { Position(0, 0), Position(0, 1), Position(1, 0), Position(1, 1) };
+		occupiedCells[0] = { Position(0, 0), Position(0, 1), Position(1, 0), Position(1, 1) };
 		Move(0, 4);
 	}
 };
@@ -59,10 +59,10 @@ public:
 	SPiece()
 	{
 		type = 5;
-		cells[0] = { Position(0, 1), Position(0, 2), Position(1, 0), Position(1, 1) };
-		cells[1] = { Position(0, 1), Position(1, 1), Position(1, 2), Position(2, 2) };
-		cells[2] = { Position(1, 1), Position(1, 2), Position(2, 0), Position(2, 1) };
-		cells[3] = { Position(0, 0), Position(1, 0), Position(1, 1), Position(2, 1) };
+		occupiedCells[0] = { Position(0, 1), Position(0, 2), Position(1, 0), Position(1, 1) };
+		occupiedCells[1] = { Position(0, 1), Position(1, 1), Position(1, 2), Position(2, 2) };
+		occupiedCells[2] = { Position(1, 1), Position(1, 2), Position(2, 0), Position(2, 1) };
+		occupiedCells[3] = { Position(0, 0), Position(1, 0), Position(1, 1), Position(2, 1) };
 		Move(0, 3);
 	}
 };
@@ -72,10 +72,10 @@ public:
 	TPiece()
 	{
 		type = 6;
-		cells[0] = { Position(0, 1), Position(1, 0), Position(1, 1), Position(1, 2) };
-		cells[1] = { Position(0, 1), Position(1, 1), Position(1, 2), Position(2, 1) };
-		cells[2] = { Position(1, 0), Position(1, 1), Position(1, 2), Position(2, 1) };
-		cells[3] = { Position(0, 1), Position(1, 0), Position(1, 1), Position(2, 1) };
+		occupiedCells[0] = { Position(0, 1), Position(1, 0), Position(1, 1), Position(1, 2) };
+		occupiedCells[1] = { Position(0, 1), Position(1, 1), Position(1, 2), Position(2, 1) };
+		occupiedCells[2] = { Position(1, 0), Position(1, 1), Position(1, 2), Position(2, 1) };
+		occupiedCells[3] = { Position(0, 1), Position(1, 0), Position(1, 1), Position(2, 1) };
 		Move(0, 3);
 	}
 };
@@ -85,10 +85,18 @@ public:
 	ZPiece()
 	{
 		type = 7;
-		cells[0] = { Position(0, 0), Position(0, 1), Position(1, 1), Position(1, 2) };
-		cells[1] = { Position(0, 2), Position(1, 1), Position(1, 2), Position(2, 1) };
-		cells[2] = { Position(1, 0), Position(1, 1), Position(2, 1), Position(2, 2) };
-		cells[3] = { Position(0, 1), Position(1, 0), Position(1, 1), Position(2, 0) };
+		occupiedCells[0] = { Position(0, 0), Position(0, 1), Position(1, 1), Position(1, 2) };
+		occupiedCells[1] = { Position(0, 2), Position(1, 1), Position(1, 2), Position(2, 1) };
+		occupiedCells[2] = { Position(1, 0), Position(1, 1), Position(2, 1), Position(2, 2) };
+		occupiedCells[3] = { Position(0, 1), Position(1, 0), Position(1, 1), Position(2, 0) };
 		Move(0, 3);
 	}
 };
+
+//class NoPiece : public Piece {
+//public:
+//	NoPiece()
+//	{
+//		type = 8;
+//	}
+//};

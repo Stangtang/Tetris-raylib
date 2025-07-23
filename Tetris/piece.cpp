@@ -1,5 +1,6 @@
 #include "piece.h"
 #include "raylib.h"
+#include "game.h"
 
 Piece::Piece()
 {
@@ -37,18 +38,18 @@ void Piece::Move(int rows, int cols)
 void Piece::Rotate()
 {
 	rotation++;
-	if (rotation >= cells.size()) rotation = 0;
+	if (rotation >= occupiedCells.size()) rotation = 0;
 }
 
 void Piece::UndoRotation()
 {
 	rotation--;
-	if (rotation < 0) rotation = cells.size() - 1;
+	if (rotation < 0) rotation = occupiedCells.size() - 1;
 }
 
 std::vector<Position> Piece::GetCellPositions()
 {
-	std::vector<Position> cellPositions = cells[rotation];
+	std::vector<Position> cellPositions = occupiedCells[rotation];
 	std::vector<Position> movedTiles;
 	for (Position pos : cellPositions)
 	{
@@ -58,3 +59,16 @@ std::vector<Position> Piece::GetCellPositions()
 	return movedTiles;
 }
 
+Piece Piece::GetNewPieceCopy()
+{
+	switch (type)
+	{
+	case 1: return LPiece();
+	case 2: return JPiece();
+	case 3: return IPiece();
+	case 4: return OPiece();
+	case 5: return SPiece();
+	case 6: return TPiece();
+	case 7: return ZPiece();
+	}
+}

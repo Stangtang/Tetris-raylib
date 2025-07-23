@@ -1,6 +1,5 @@
 #include "text.h"
 #include <iostream>
-#include "piece.h"
 #include "game.h"
 
 int fontSize = 50;
@@ -40,4 +39,54 @@ void DrawScore(const Game& game)
 	char scoreText[10];
 	snprintf(scoreText, sizeof(scoreText), "%d", game.score);
 	DrawTextEx(scoreFont, scoreText, { 540 - MeasureTextEx(scoreFont, scoreText, scoreFontSize, 2).x / 2, (80 + 80) / 2 + 13 }, scoreFontSize, 2, BLACK);
+}
+
+void DrawNext(const Game& game)
+{
+	DrawTextEx(font, "Next", { 540 - MeasureTextEx(font, "Next", fontSize, 2).x / 2, 200 }, fontSize, 2, BLACK);
+	DrawRectangleRounded({ 540 - 225 / 2, 200 + 65, 225, 225 }, 0.3, 6, GRAY);
+
+	Piece piece = game.nextPiece;
+	switch (piece.type)
+	{
+	case 3: // I-piece
+		piece.Draw(360 - 18, 380);
+		break;
+	case 4: // O-piece
+		piece.Draw(360 - 15, 340);
+		break;
+	default:
+		piece.Draw(360, 340);
+		break;
+	}
+}
+
+void DrawHeld(const Game& game, bool heldPieceExists)
+{
+	DrawTextEx(font, "Held", { 540 - MeasureTextEx(font, "Held", fontSize, 2).x / 2, 525 }, fontSize, 2, BLACK);
+	DrawRectangleRounded({ 540 - 225 / 2, 525 + 65, 225, 225 }, 0.3, 6, GRAY);
+
+	if (heldPieceExists)
+	{
+		Piece piece = game.heldPiece;
+		switch (piece.type)
+		{
+		case 3: // I-piece
+			piece.Draw(360 - 18, 380 + 325);
+			break;
+		case 4: // O-piece
+			piece.Draw(360 - 15, 340 + 325);
+			break;
+		default:
+			piece.Draw(360, 340 + 325);
+			break;
+		}
+	}
+}
+
+void DrawGameOver()
+{
+	DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, 0.7f));
+	// DrawTextEx(gameOverFont, "GAME OVER", { (15 + 400 + 250) / 2 - MeasureTextEx(font, "GAME OVER", gameOverFontSize, 5).x / 2, (15 + 800 + 15) / 2 - MeasureTextEx(font, "GAME OVER", gameOverFontSize, 5).y / 2 }, gameOverFontSize, 5, BLACK);
+	DrawOutlinedText(gameOverFont, "GAME OVER", { (15 + 400 + 250) / 2 - MeasureTextEx(font, "GAME OVER", gameOverFontSize, 5).x / 2, (15 + 800 + 15) / 2 - MeasureTextEx(font, "GAME OVER", gameOverFontSize, 5).y / 2 }, gameOverFontSize, 5, BLACK, 4, WHITE);
 }

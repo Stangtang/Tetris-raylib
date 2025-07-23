@@ -11,12 +11,13 @@ public:
 	Piece();
 	int type;
 	void Draw();
-	void Draw(int offsetX, int offsetY);
+	void Draw(int XOffset, int YOffset);
 	void Move(int rows, int cols);
 	void Rotate();
 	void UndoRotation();
 	std::vector<Position> GetCellPositions();
-	std::map<int, std::vector<Position>> cells;
+	std::map<int, std::vector<Position>> occupiedCells;
+	Piece GetNewPieceCopy();
 
 private:
 	int cellSize;

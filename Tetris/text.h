@@ -13,3 +13,6 @@ extern Font gameOverFont;
 void LoadFonts();
 void DrawOutlinedText(Font font, const char* text, Vector2 position, float fontSize, float spacing, Color color, int outlineSize, Color outlineColor);
 void DrawScore(const Game& game);
+void DrawNext(const Game& game);
+void DrawHeld(const Game& game, bool heldPieceExists);
+void DrawGameOver();

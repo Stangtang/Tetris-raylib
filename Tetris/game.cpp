@@ -1,5 +1,6 @@
 #include "game.h"
 #include <random>
+#include <algorithm>
 
 Game::Game()
 {
@@ -7,6 +8,8 @@ Game::Game()
 	Pieces = GetAllPieces();
 	currentPiece = GetRandomPiece();
 	nextPiece = GetRandomPiece();
+	heldPiece;
+	heldPieceExists = false;
 	gameOverFlag = false;
 	score = 0;
 
@@ -60,7 +63,7 @@ void Game::HandleInput()
 
 	if (gameOverFlag && IsKeyPressed(KEY_Z))
 	{
-		resetGame();
+		ResetGame();
 		return;
 	}
 
@@ -77,7 +80,7 @@ void Game::HandleInput()
 	if (IsKeyDown(KEY_DOWN) && now - lastMoveDownTime > softDropDelay)
 	{
 		MovePieceDown();
-		updateScore(0, 1);
+		UpdateScore(0, 1);
 		lastMoveDownTime = now;
 	}
 	if (IsKeyDown(KEY_Z) && now - lastRotateTime > rotateDelay)
@@ -93,7 +96,12 @@ void Game::HandleInput()
 
 	if (IsKeyPressed(KEY_R))
 	{
-		resetGame();
+		ResetGame();
+	}
+
+	if (IsKeyPressed(KEY_C))
+	{
+		HoldPiece();
 	}
 }
 
@@ -147,11 +155,30 @@ void Game::DropPiece()
 	while (!IsPieceOutsideGrid() && !IsPieceOverlapping())
 	{
 		currentPiece.Move(1, 0);
-		updateScore(0, 1);
+		UpdateScore(0, 1);
 	}
 	currentPiece.Move(-1, 0);
-	updateScore(0, -1);
+	UpdateScore(0, -1);
 	AnchorPiece();
+}
+
+void Game::HoldPiece()
+{
+	if (gameOverFlag) return;
+
+	if (!heldPieceExists) // no piece held
+	{
+		heldPiece = currentPiece;
+		heldPiece = heldPiece.GetNewPieceCopy();
+		heldPieceExists = true;
+		currentPiece = nextPiece;
+		nextPiece = GetRandomPiece();
+		return;
+	}
+
+	std::swap(heldPiece, currentPiece);
+	heldPiece = heldPiece.GetNewPieceCopy();
+	currentPiece = currentPiece.GetNewPieceCopy();
 }
 
 bool Game::IsPieceOutsideGrid()
@@ -186,7 +213,7 @@ void Game::AnchorPiece()
 	if (linesCleared > 0)
 	{
 		PlaySound(clearSound);
-		updateScore(linesCleared, 0);
+		UpdateScore(linesCleared, 0);
 	}
 
 	// lastMoveLeftTime = lastMoveRightTime = lastMoveDownTime = lastRotateTime = Clock::now();
@@ -205,18 +232,19 @@ bool Game::IsPieceOverlapping()
 	return false;
 }
 
-void Game::resetGame()
+void Game::ResetGame()
 {
 	grid.Init();
 	Pieces = GetAllPieces();
 	currentPiece = GetRandomPiece();
 	nextPiece = GetRandomPiece();
+	heldPieceExists = false;
 	gameOverFlag = false;
 	score = 0;
 	// lastMoveLeftTime = lastMoveRightTime = lastMoveDownTime = lastRotateTime = Clock::now();
 }
 
-void Game::updateScore(int linesCleared, int timesMovedDown)
+void Game::UpdateScore(int linesCleared, int timesMovedDown)
 {
 	switch (linesCleared)
 	{
