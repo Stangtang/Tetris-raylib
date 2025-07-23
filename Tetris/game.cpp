@@ -10,6 +10,7 @@ Game::Game()
 	nextPiece = GetRandomPiece();
 	heldPiece;
 	heldPieceExists = false;
+	canHoldPiece = true;
 	gameOverFlag = false;
 	score = 0;
 
@@ -101,7 +102,7 @@ void Game::HandleInput()
 
 	if (IsKeyPressed(KEY_C))
 	{
-		HoldPiece();
+		if (canHoldPiece) HoldPiece();
 	}
 }
 
@@ -170,15 +171,17 @@ void Game::HoldPiece()
 	{
 		heldPiece = currentPiece;
 		heldPiece = heldPiece.GetNewPieceCopy();
-		heldPieceExists = true;
 		currentPiece = nextPiece;
 		nextPiece = GetRandomPiece();
+		heldPieceExists = true;
+		canHoldPiece = false;
 		return;
 	}
 
 	std::swap(heldPiece, currentPiece);
 	heldPiece = heldPiece.GetNewPieceCopy();
 	currentPiece = currentPiece.GetNewPieceCopy();
+	canHoldPiece = false;
 }
 
 bool Game::IsPieceOutsideGrid()
@@ -201,6 +204,7 @@ void Game::AnchorPiece()
 	{
 		grid.grid[pos.row][pos.col] = currentPiece.type;
 	}
+
 	currentPiece = nextPiece;
 	if (IsPieceOverlapping())
 	{
@@ -208,6 +212,7 @@ void Game::AnchorPiece()
 		PlaySound(gameoverSound);
 	}
 	nextPiece = GetRandomPiece();
+	canHoldPiece = true;
 
 	int linesCleared = grid.ClearFullRows();
 	if (linesCleared > 0)
@@ -239,6 +244,7 @@ void Game::ResetGame()
 	currentPiece = GetRandomPiece();
 	nextPiece = GetRandomPiece();
 	heldPieceExists = false;
+	canHoldPiece = true;
 	gameOverFlag = false;
 	score = 0;
 	// lastMoveLeftTime = lastMoveRightTime = lastMoveDownTime = lastRotateTime = Clock::now();

@@ -18,6 +18,7 @@ public:
 	Piece nextPiece;
 	Piece heldPiece;
 	bool heldPieceExists;
+	bool canHoldPiece;
 	bool gameOverFlag;
 	int score;
 
