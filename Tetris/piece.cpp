@@ -63,12 +63,12 @@ Piece Piece::GetNewPieceCopy()
 {
 	switch (type)
 	{
-	case 1: return LPiece();
-	case 2: return JPiece();
-	case 3: return IPiece();
-	case 4: return OPiece();
-	case 5: return SPiece();
-	case 6: return TPiece();
+	case 1: return IPiece();
+	case 2: return OPiece();
+	case 3: return TPiece();
+	case 4: return LPiece();
+	case 5: return JPiece();
+	case 6: return SPiece();
 	case 7: return ZPiece();
 	}
 }
