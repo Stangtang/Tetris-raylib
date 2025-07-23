@@ -1,11 +1,12 @@
 #include "game.h"
-#include <random>
 #include <algorithm>
 
-Game::Game()
+Game::Game() :
+	randomEngine(std::random_device{}())
 {
 	grid = Grid();
-	Pieces = GetAllPieces();
+	pieceBag = GetAllPieces();
+	std::shuffle(pieceBag.begin(), pieceBag.end(), randomEngine);
 	currentPiece = GetRandomPiece();
 	nextPiece = GetRandomPiece();
 	heldPiece;
@@ -30,28 +31,23 @@ Game::~Game()
 	CloseAudioDevice();
 }
 
-Piece Game::GetRandomPiece()
-{
-	if (Pieces.empty()) 
-	{
-		Pieces = GetAllPieces();
-	}
-
-	std::random_device rd;
-	std::mt19937 gen(rd());
-	std::uniform_int_distribution<> randPiece(0, Pieces.size() - 1);
-
-	const int randomIndex = randPiece(gen);
-	const Piece piece = Pieces[randomIndex];
-	Pieces.erase(Pieces.begin() + randomIndex);
-	return piece;
-}
-
 std::vector<Piece> Game::GetAllPieces()
 {
-	//return { IPiece(), JPiece(), LPiece(), OPiece(), SPiece(), TPiece(), ZPiece() };
 	static const std::vector<Piece> pieces = { IPiece(), JPiece(), LPiece(), OPiece(), SPiece(), TPiece(), ZPiece() };
 	return pieces;
+}
+
+Piece Game::GetRandomPiece()
+{
+	if (pieceBag.empty())
+	{
+		pieceBag = GetAllPieces();
+		std::shuffle(pieceBag.begin(), pieceBag.end(), randomEngine);
+	}
+
+	Piece piece = pieceBag.back();
+	pieceBag.pop_back();
+	return piece;
 }
 
 void Game::Draw()
@@ -148,7 +144,7 @@ void Game::HoldPiece()
 {
 	if (gameOverFlag) return;
 
-	if (!heldPieceExists) // no piece held
+	if (!heldPieceExists)
 	{
 		heldPiece = currentPiece;
 		heldPiece = heldPiece.GetNewPieceCopy();
@@ -221,7 +217,7 @@ bool Game::IsPieceOverlapping()
 void Game::ResetGame()
 {
 	grid.Init();
-	Pieces = GetAllPieces();
+	pieceBag = GetAllPieces();
 	currentPiece = GetRandomPiece();
 	nextPiece = GetRandomPiece();
 	heldPieceExists = false;

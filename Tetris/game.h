@@ -2,6 +2,7 @@
 
 #include "grid.h"
 #include "pieces.cpp"
+#include <random>
 #include <chrono>
 
 class Game
@@ -23,13 +24,14 @@ public:
 	int score;
 
 private:
+	std::mt19937 randomEngine;
+	std::vector<Piece> pieceBag;
 	Piece GetRandomPiece();
 	std::vector<Piece> GetAllPieces();
 	void MovePieceLeft();
 	void MovePieceRight();
 	Grid grid;
 	void ResetGame();
-	std::vector<Piece> Pieces;
 	bool IsPieceOutsideGrid();
 	void RotatePiece();
 	void AnchorPiece();
