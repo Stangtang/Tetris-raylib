@@ -71,10 +71,10 @@ void DrawNext(const Game& game)
 	Piece piece = game.nextPiece;
 	switch (piece.type)
 	{
-	case 3: // I-piece
+	case 1: // I-piece
 		piece.Draw(360 - 19, 370 - 22);
 		break;
-	case 4: // O-piece
+	case 2: // O-piece
 		piece.Draw(360 - 19, 330 - 2);
 		break;
 	default:
@@ -93,10 +93,10 @@ void DrawHeld(const Game& game, const bool& heldPieceExists)
 	Piece piece = game.heldPiece;
 	switch (piece.type)
 	{
-	case 3: // I-piece
+	case 1: // I-piece
 		piece.Draw(360 - 19, 370 - 22 + 325);
 		break;
-	case 4: // O-piece
+	case 2: // O-piece
 		piece.Draw(360 - 19, 330 - 2 + 325);
 		break;
 	default:
