@@ -15,16 +15,18 @@ public:
 	void MovePieceDown();
 	void DropPiece();
 	void HoldPiece();
+	void AutoDropPiece();
 	Piece currentPiece;
 	Piece nextPiece;
 	Piece heldPiece;
 	bool heldPieceExists;
 	bool canHoldPiece;
 	bool gameOverFlag;
-	int score;
+	unsigned long long score;
+	std::chrono::milliseconds GetAutoDropInterval();
 
 private:
-	std::mt19937 randomEngine;
+	std::mt19937 randomPieceEngine;
 	std::vector<Piece> pieceBag;
 	Piece GetRandomPiece();
 	void RefillPieceBag();
@@ -37,7 +39,7 @@ private:
 	void RotatePiece();
 	void AnchorPiece();
 	bool IsPieceOverlapping();
-	void UpdateScore(int linesCleared, int timesMovedDown);
+	void UpdateScore(const unsigned short& linesCleared, const short& timesMovedDown);
 
 	Sound rotateSound;
 	Sound clearSound;
@@ -45,9 +47,18 @@ private:
 
 	using Clock = std::chrono::steady_clock;
 	using TimePoint = std::chrono::time_point<Clock>;
-	std::chrono::milliseconds moveDelay{ 110 };
-	std::chrono::milliseconds rotateDelay{ 180 };
-	std::chrono::milliseconds softDropDelay{ 110 };
+
+	const std::chrono::milliseconds initialAutoDropInterval{ 600 };
+	const std::chrono::milliseconds finalAutoDropInterval{ 50 };
+	const long long finalAutoDropIntervalScore = 20000;
+	TimePoint lastPieceLoweringTime = Clock::now();
+	std::chrono::milliseconds autoDropInterval = initialAutoDropInterval;
+	const double autoDropIntervalDecreasePerScore = static_cast<double> (finalAutoDropInterval.count() - initialAutoDropInterval.count()) / finalAutoDropIntervalScore * -1;
+	bool ShouldLowerPiece();
+
+	const std::chrono::milliseconds moveDelay{ 110 };
+	const std::chrono::milliseconds rotateDelay{ 180 };
+	const std::chrono::milliseconds softDropDelay{ 110 };
 	TimePoint lastMoveLeftTime = Clock::now();
 	TimePoint lastMoveRightTime = Clock::now();
 	TimePoint lastMoveDownTime = Clock::now();

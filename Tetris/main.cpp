@@ -4,30 +4,6 @@
 #include "text.h"
 #include <iostream>
 
-// for debug
-//void PrintPieceSequence(Game& game)
-//{
-//	std::cout << "Piece sequence: ";
-//	for (int i = 0; i < 14; i++) {  // 2 full bags
-//		Piece p = game.GetRandomPiece();
-//		std::cout << p.type << " ";
-//	}
-//	std::cout << "\n";
-//}
-
-auto lastPieceLoweringTime = std::chrono::steady_clock::now();
-bool ShouldLowerPiece(std::chrono::steady_clock::time_point& lastPieceLoweringTime)
-{
-	using namespace std::chrono;
-	auto now = steady_clock::now();
-	auto elapsed = duration_cast<milliseconds>(now - lastPieceLoweringTime);
-	if (elapsed.count() >= 600) { // lower piece every 600 ms
-		lastPieceLoweringTime = now;
-		return true;
-	}
-	return false;
-}
-
 int main()
 {
 	InitWindow(15 + 400 + 250, 15 + 800 + 15, "Tetris");
@@ -39,12 +15,11 @@ int main()
 
 	while (!WindowShouldClose())
 	{
+		std::cout << game.GetAutoDropInterval().count() << std::endl;
+
 		game.HandleInput();
 
-		if (ShouldLowerPiece(lastPieceLoweringTime))
-		{
-			game.MovePieceDown();
-		}
+		game.AutoDropPiece();
 
 		BeginDrawing();
 			ClearBackground(LIGHTGRAY);

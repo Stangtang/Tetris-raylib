@@ -5,9 +5,9 @@ Game::Game()
 {
 	grid = Grid();
 	std::random_device rd;
-	randomEngine = std::mt19937(rd());
+	randomPieceEngine = std::mt19937(rd());
 	RefillPieceBag();
-	std::shuffle(pieceBag.begin(), pieceBag.end(), randomEngine);
+	std::shuffle(pieceBag.begin(), pieceBag.end(), randomPieceEngine);
 	currentPiece = GetRandomPiece();
 	nextPiece = GetRandomPiece();
 	heldPiece;
@@ -52,7 +52,7 @@ Piece Game::GetRandomPiece()
 void Game::RefillPieceBag()
 {
 	pieceBag = GetAllPieces();
-	std::shuffle(pieceBag.begin(), pieceBag.end(), randomEngine);
+	std::shuffle(pieceBag.begin(), pieceBag.end(), randomPieceEngine);
 }
 
 void Game::Draw()
@@ -67,7 +67,7 @@ void Game::HandleInput()
 
 	if (gameOverFlag)
 	{
-		if (IsKeyPressed(KEY_Z)) ResetGame();
+		if (IsKeyPressed(KEY_Z) || IsKeyPressed(KEY_R)) ResetGame();
 		return;
 	}
 
@@ -195,7 +195,7 @@ void Game::AnchorPiece()
 	nextPiece = GetRandomPiece();
 	canHoldPiece = true;
 
-	int linesCleared = grid.ClearFullRows();
+	const unsigned short linesCleared = grid.ClearFullRows();
 	if (linesCleared > 0)
 	{
 		PlaySound(clearSound);
@@ -228,10 +228,13 @@ void Game::ResetGame()
 	canHoldPiece = true;
 	gameOverFlag = false;
 	score = 0;
+
+	autoDropInterval = initialAutoDropInterval;
+	lastPieceLoweringTime = Clock::now();
 	// lastMoveLeftTime = lastMoveRightTime = lastMoveDownTime = lastRotateTime = Clock::now();
 }
 
-void Game::UpdateScore(int linesCleared, int timesMovedDown)
+void Game::UpdateScore(const unsigned short& linesCleared, const short& timesMovedDown)
 {
 	switch (linesCleared)
 	{
@@ -250,6 +253,29 @@ void Game::UpdateScore(int linesCleared, int timesMovedDown)
 	default:
 		break;
 	}
-
 	score += timesMovedDown;
+
+	autoDropInterval = std::chrono::milliseconds{ std::max(finalAutoDropInterval.count(), static_cast<long long> (initialAutoDropInterval.count() - score * autoDropIntervalDecreasePerScore)) };
+}
+
+void Game::AutoDropPiece()
+{
+	if (ShouldLowerPiece()) MovePieceDown();
+}
+
+bool Game::ShouldLowerPiece()
+{
+	using namespace std::chrono;
+	const auto now = steady_clock::now();
+	const auto elapsed = duration_cast<milliseconds>(now - lastPieceLoweringTime);
+	if (elapsed.count() >= autoDropInterval.count()) {
+		lastPieceLoweringTime = now;
+		return true;
+	}
+	return false;
+}
+
+std::chrono::milliseconds Game::GetAutoDropInterval()
+{
+	return autoDropInterval;
 }
