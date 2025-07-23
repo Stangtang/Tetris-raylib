@@ -58,9 +58,9 @@ bool Grid::IsCellEmpty(int row, int col)
 	return false;
 }
 
-int Grid::ClearFullRows()
+unsigned short Grid::ClearFullRows()
 {
-	int completedRows = 0;
+	unsigned short completedRows = 0;
 	for (int row = numRows - 1; row >= 0; row--)
 	{
 		if (IsRowFull(row))
