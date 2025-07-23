@@ -19,7 +19,7 @@ private:
 	int numRows;
 	int numCols;
 	int cellSize;
-	std::vector<Color> colors;
+	static std::vector<Color> colors;
 	bool IsRowFull(int row);
 	void ClearRow(int row);
 	void ShiftRowDown(int row, int numRows);

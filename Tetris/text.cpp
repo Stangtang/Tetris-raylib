@@ -2,30 +2,46 @@
 #include <iostream>
 #include "game.h"
 
-int fontSize = 50;
+const int fontSize = 50;
 Font font;
-int scoreFontSize = 45;
+const int scoreFontSize = 45;
 Font scoreFont;
-int gameOverFontSize = 125;
+const int gameOverFontSize = 125;
 Font gameOverFont;
+
+Vector2 scoreTextSize;
+Vector2 nextTextSize;
+Vector2 heldTextSize;
+Vector2 gameOverTextSize;
 
 void LoadFonts()
 {
 	font = LoadFontEx("Font/monogram.ttf", fontSize, 0, 0);
 	scoreFont = LoadFontEx("Font/monogram.ttf", scoreFontSize, 0, 0);
 	gameOverFont = LoadFontEx("Font/monogram.ttf", gameOverFontSize, 0, 0);
+
+	scoreTextSize = MeasureTextEx(font, "Score", fontSize, 2);
+	nextTextSize = MeasureTextEx(font, "Next", fontSize, 2);
+	heldTextSize = MeasureTextEx(font, "Held", fontSize, 2);
+	gameOverTextSize = MeasureTextEx(font, "GAME OVER", gameOverFontSize, 5);
 }
 
-void DrawOutlinedText(Font font, const char* text, Vector2 position, float fontSize, float spacing, Color color, int outlineSize, Color outlineColor) {
-	Vector2 offsets[] = {
+void UnloadFonts() {
+	UnloadFont(font);
+	UnloadFont(scoreFont);
+	UnloadFont(gameOverFont);
+}
+
+void DrawOutlinedText(Font font, const char* text, Vector2 position, const float& fontSize, const float& spacing, Color color, const int& outlineSize, Color outlineColor) {
+	const Vector2 offsets[] = {
 		{-outlineSize, -outlineSize},
 		{ outlineSize, -outlineSize},
 		{-outlineSize,  outlineSize},
 		{ outlineSize,  outlineSize}
 	};
 
-	for (Vector2 offset : offsets) {
-		Vector2 outlinePos = { position.x + offset.x, position.y + offset.y };
+	for (const Vector2& offset : offsets) {
+		const Vector2 outlinePos = { position.x + offset.x, position.y + offset.y };
 		DrawTextEx(font, text, outlinePos, fontSize, spacing, outlineColor);
 	}
 
@@ -34,16 +50,16 @@ void DrawOutlinedText(Font font, const char* text, Vector2 position, float fontS
 
 void DrawScore(const Game& game)
 {
-	DrawTextEx(font, "Score", { 540 - MeasureTextEx(font, "Score", fontSize, 2).x / 2, 15 }, fontSize, 2, BLACK);
+	DrawTextEx(font, "Score", { 540 - scoreTextSize.x / 2, 15 }, fontSize, 2, BLACK);
 	DrawRectangleRounded({ 540 - 225 / 2, 80, 225, 80 }, 0.3, 6, GRAY);
-	char scoreText[10];
-	snprintf(scoreText, sizeof(scoreText), "%d", game.score);
-	DrawTextEx(scoreFont, scoreText, { 540 - MeasureTextEx(scoreFont, scoreText, scoreFontSize, 2).x / 2, (80 + 80) / 2 + 13 }, scoreFontSize, 2, BLACK);
+	char scoreNumberText[10];
+	snprintf(scoreNumberText, sizeof(scoreNumberText), "%d", game.score);
+	DrawTextEx(scoreFont, scoreNumberText, { 540 - MeasureTextEx(scoreFont, scoreNumberText, scoreFontSize, 2).x / 2, (80 + 80) / 2 + 13 }, scoreFontSize, 2, BLACK);
 }
 
 void DrawNext(const Game& game)
 {
-	DrawTextEx(font, "Next", { 540 - MeasureTextEx(font, "Next", fontSize, 2).x / 2, 200 }, fontSize, 2, BLACK);
+	DrawTextEx(font, "Next", { 540 - nextTextSize.x / 2, 200 }, fontSize, 2, BLACK);
 	DrawRectangleRounded({ 540 - 225 / 2, 200 + 65, 225, 225 }, 0.3, 6, GRAY);
 
 	Piece piece = game.nextPiece;
@@ -61,26 +77,25 @@ void DrawNext(const Game& game)
 	}
 }
 
-void DrawHeld(const Game& game, bool heldPieceExists)
+void DrawHeld(const Game& game, const bool& heldPieceExists)
 {
-	DrawTextEx(font, "Held", { 540 - MeasureTextEx(font, "Held", fontSize, 2).x / 2, 525 }, fontSize, 2, BLACK);
+	DrawTextEx(font, "Held", { 540 - heldTextSize.x / 2, 525 }, fontSize, 2, BLACK);
 	DrawRectangleRounded({ 540 - 225 / 2, 525 + 65, 225, 225 }, 0.3, 6, GRAY);
 
-	if (heldPieceExists)
+	if (!heldPieceExists) return;
+
+	Piece piece = game.heldPiece;
+	switch (piece.type)
 	{
-		Piece piece = game.heldPiece;
-		switch (piece.type)
-		{
-		case 3: // I-piece
-			piece.Draw(360 - 18, 380 + 325);
-			break;
-		case 4: // O-piece
-			piece.Draw(360 - 15, 340 + 325);
-			break;
-		default:
-			piece.Draw(360, 340 + 325);
-			break;
-		}
+	case 3: // I-piece
+		piece.Draw(360 - 18, 380 + 325);
+		break;
+	case 4: // O-piece
+		piece.Draw(360 - 15, 340 + 325);
+		break;
+	default:
+		piece.Draw(360, 340 + 325);
+		break;
 	}
 }
 
@@ -88,5 +103,5 @@ void DrawGameOver()
 {
 	DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, 0.7f));
 	// DrawTextEx(gameOverFont, "GAME OVER", { (15 + 400 + 250) / 2 - MeasureTextEx(font, "GAME OVER", gameOverFontSize, 5).x / 2, (15 + 800 + 15) / 2 - MeasureTextEx(font, "GAME OVER", gameOverFontSize, 5).y / 2 }, gameOverFontSize, 5, BLACK);
-	DrawOutlinedText(gameOverFont, "GAME OVER", { (15 + 400 + 250) / 2 - MeasureTextEx(font, "GAME OVER", gameOverFontSize, 5).x / 2, (15 + 800 + 15) / 2 - MeasureTextEx(font, "GAME OVER", gameOverFontSize, 5).y / 2 }, gameOverFontSize, 5, BLACK, 4, WHITE);
+	DrawOutlinedText(gameOverFont, "GAME OVER", { (15 + 400 + 250) / 2 - gameOverTextSize.x / 2, (15 + 800 + 15) / 2 - gameOverTextSize.y / 2 }, gameOverFontSize, 5, BLACK, 4, WHITE);
 }

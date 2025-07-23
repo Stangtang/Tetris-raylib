@@ -92,11 +92,3 @@ public:
 		Move(0, 3);
 	}
 };
-
-//class NoPiece : public Piece {
-//public:
-//	NoPiece()
-//	{
-//		type = 8;
-//	}
-//};

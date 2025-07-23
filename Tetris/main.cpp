@@ -9,7 +9,6 @@ bool ShouldLowerPiece(std::chrono::steady_clock::time_point& lastPieceLoweringTi
 	using namespace std::chrono;
 	auto now = steady_clock::now();
 	auto elapsed = duration_cast<milliseconds>(now - lastPieceLoweringTime);
-
 	if (elapsed.count() >= 600) { // lower piece every 600 ms
 		lastPieceLoweringTime = now;
 		return true;
@@ -29,6 +28,7 @@ int main()
 	while (!WindowShouldClose())
 	{
 		game.HandleInput();
+
 		if (ShouldLowerPiece(lastPieceLoweringTime))
 		{
 			game.MovePieceDown();
@@ -50,7 +50,7 @@ int main()
 
 		EndDrawing();
 	}
-
+	UnloadFonts();
 	CloseWindow();
 
 	return 0;

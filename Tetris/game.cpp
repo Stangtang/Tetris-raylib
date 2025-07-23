@@ -41,15 +41,17 @@ Piece Game::GetRandomPiece()
 	std::mt19937 gen(rd());
 	std::uniform_int_distribution<> randPiece(0, Pieces.size() - 1);
 
-	int randomIndex = randPiece(gen);
-	Piece piece = Pieces[randomIndex];
+	const int randomIndex = randPiece(gen);
+	const Piece piece = Pieces[randomIndex];
 	Pieces.erase(Pieces.begin() + randomIndex);
 	return piece;
 }
 
 std::vector<Piece> Game::GetAllPieces()
 {
-	return { IPiece(), JPiece(), LPiece(), OPiece(), SPiece(), TPiece(), ZPiece() };
+	//return { IPiece(), JPiece(), LPiece(), OPiece(), SPiece(), TPiece(), ZPiece() };
+	static const std::vector<Piece> pieces = { IPiece(), JPiece(), LPiece(), OPiece(), SPiece(), TPiece(), ZPiece() };
+	return pieces;
 }
 
 void Game::Draw()
@@ -62,48 +64,27 @@ void Game::HandleInput()
 {
 	TimePoint now = Clock::now();
 
-	if (gameOverFlag && IsKeyPressed(KEY_Z))
+	if (gameOverFlag)
 	{
-		ResetGame();
+		if (IsKeyPressed(KEY_Z)) ResetGame();
 		return;
 	}
 
-	if (IsKeyDown(KEY_LEFT) && now - lastMoveLeftTime > moveDelay)
-	{
-		MovePieceLeft();
-		lastMoveLeftTime = now;
-	}
-	if (IsKeyDown(KEY_RIGHT) && now - lastMoveRightTime > moveDelay)
-	{
-		MovePieceRight();
-		lastMoveRightTime = now;
-	}
-	if (IsKeyDown(KEY_DOWN) && now - lastMoveDownTime > softDropDelay)
-	{
-		MovePieceDown();
-		UpdateScore(0, 1);
-		lastMoveDownTime = now;
-	}
-	if (IsKeyDown(KEY_Z) && now - lastRotateTime > rotateDelay)
-	{
-		RotatePiece();
-		lastRotateTime = now;
-	}
+	const auto processMovement = [&](int key, auto& lastActionTime, const auto& delay, auto action) {
+		if (IsKeyDown(key) && now - lastActionTime > delay) {
+			action();
+			lastActionTime = now;
+		}
+	};
+	processMovement(KEY_LEFT, lastMoveLeftTime, moveDelay, [&] { MovePieceLeft(); });
+	processMovement(KEY_RIGHT, lastMoveRightTime, moveDelay, [&] { MovePieceRight(); });
+	processMovement(KEY_DOWN, lastMoveDownTime, softDropDelay, [&] { MovePieceDown();
+																	 UpdateScore(0, 1); });
+	processMovement(KEY_Z, lastRotateTime, rotateDelay, [&] { RotatePiece(); });
 
-	if (IsKeyPressed(KEY_X))
-	{
-		DropPiece();
-	}
-
-	if (IsKeyPressed(KEY_R))
-	{
-		ResetGame();
-	}
-
-	if (IsKeyPressed(KEY_C))
-	{
-		if (canHoldPiece) HoldPiece();
-	}
+	if (IsKeyPressed(KEY_X)) DropPiece();
+	if (IsKeyPressed(KEY_R)) ResetGame();
+	if (IsKeyPressed(KEY_C) && canHoldPiece) HoldPiece();
 }
 
 void Game::MovePieceLeft()
@@ -187,7 +168,7 @@ void Game::HoldPiece()
 bool Game::IsPieceOutsideGrid()
 {
 	std::vector<Position> cellPositions = currentPiece.GetCellPositions();
-	for (Position pos : cellPositions)
+	for (const Position& pos : cellPositions)
 	{
 		if (grid.IsCellOutsideGrid(pos.row, pos.col))
 		{
@@ -200,7 +181,7 @@ bool Game::IsPieceOutsideGrid()
 void Game::AnchorPiece()
 {
 	std::vector<Position> cellPositions = currentPiece.GetCellPositions();
-	for (Position pos : cellPositions)
+	for (const Position& pos : cellPositions)
 	{
 		grid.grid[pos.row][pos.col] = currentPiece.type;
 	}
@@ -227,7 +208,7 @@ void Game::AnchorPiece()
 bool Game::IsPieceOverlapping()
 {
 	std::vector<Position> cellPositions = currentPiece.GetCellPositions();
-	for (Position pos : cellPositions)
+	for (const Position& pos : cellPositions)
 	{
 		if (!grid.IsCellEmpty(pos.row, pos.col))
 		{

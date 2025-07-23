@@ -2,13 +2,13 @@
 #include <iostream>
 #include "colors.h"
 
+std::vector<Color> Grid::colors = GetColors();
 Grid::Grid()
 {
 	numRows = 20;
 	numCols = 10;
 	cellSize = 40;
 	Init();
-	colors = GetColors();
 }
 
 void Grid::Init()

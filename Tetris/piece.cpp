@@ -2,11 +2,11 @@
 #include "raylib.h"
 #include "game.h"
 
+std::vector<Color> Piece::colors = GetColors();
 Piece::Piece()
 {
 	cellSize = 40;
 	rotation = 0;
-	colors = GetColors();
 	rowOffset = 0;
 	colOffset = 0;
 }
@@ -14,7 +14,7 @@ Piece::Piece()
 void Piece::Draw()
 {
 	std::vector<Position> cellPositions = GetCellPositions();
-	for (Position pos : cellPositions)
+	for (const Position& pos : cellPositions)
 	{
 		DrawRectangle(pos.col * cellSize + 1 + 15, pos.row * cellSize + 1 + 15, cellSize - 1, cellSize - 1, colors[type]);
 	}
@@ -23,7 +23,7 @@ void Piece::Draw()
 void Piece::Draw(int offsetX, int offsetY)
 {
 	std::vector<Position> cellPositions = GetCellPositions();
-	for (Position pos : cellPositions)
+	for (const Position& pos : cellPositions)
 	{
 		DrawRectangle(pos.col * cellSize + offsetX, pos.row * cellSize + offsetY, cellSize - 1, cellSize - 1, colors[type]);
 	}
@@ -51,7 +51,7 @@ std::vector<Position> Piece::GetCellPositions()
 {
 	std::vector<Position> cellPositions = occupiedCells[rotation];
 	std::vector<Position> movedTiles;
-	for (Position pos : cellPositions)
+	for (const Position& pos : cellPositions)
 	{
 		Position newPos = Position(pos.row + rowOffset, pos.col + colOffset);
 		movedTiles.push_back(newPos);
