@@ -12,6 +12,6 @@ const Color orange = { 226, 116, 17, 255 };
 
 std::vector<Color> GetColors()
 {
-	static const std::vector<Color> colors = { darkGray, orange, blue, cyan, yellow, green, purple, red };
+	static const std::vector<Color> colors = { darkGray, cyan, yellow, purple, orange, blue, green, red };
 	return colors;
 }
