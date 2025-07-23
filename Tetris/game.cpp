@@ -1,3 +1,5 @@
+// https://harddrop.com/wiki/SRS#Wall_kicks
+
 #include "game.h"
 #include <algorithm>
 
@@ -34,7 +36,7 @@ Game::~Game()
 
 std::vector<Piece> Game::GetAllPieces()
 {
-	static const std::vector<Piece> pieces = { IPiece(), JPiece(), LPiece(), OPiece(), SPiece(), TPiece(), ZPiece() };
+	static const std::vector<Piece> pieces = { IPiece(), OPiece(), TPiece(), LPiece(), JPiece(), SPiece(), ZPiece() };
 	return pieces;
 }
 

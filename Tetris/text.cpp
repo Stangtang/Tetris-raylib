@@ -108,6 +108,5 @@ void DrawHeld(const Game& game, const bool& heldPieceExists)
 void DrawGameOver()
 {
 	DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, 0.7f));
-	// DrawTextEx(gameOverFont, "GAME OVER", { (15 + 400 + 250) / 2 - MeasureTextEx(font, "GAME OVER", gameOverFontSize, 5).x / 2, (15 + 800 + 15) / 2 - MeasureTextEx(font, "GAME OVER", gameOverFontSize, 5).y / 2 }, gameOverFontSize, 5, BLACK);
-	DrawOutlinedText(gameOverFont, "GAME OVER", { (15 + 400 + 250) / 2 - gameOverTextSize.x / 2, (15 + 800 + 15) / 2 - gameOverTextSize.y / 2 }, gameOverFontSize, 5, BLACK, 4, WHITE);
+	DrawOutlinedText(gameOverFont, "GAME OVER", { (15 + 400 + 250) / 2 - gameOverTextSize.x / 2, (15 + 800 + 15) / 2 - gameOverTextSize.y / 2 - 6}, gameOverFontSize, 5, BLACK, 4, WHITE);
 }
