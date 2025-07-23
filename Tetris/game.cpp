@@ -1,11 +1,12 @@
 #include "game.h"
 #include <algorithm>
 
-Game::Game() :
-	randomEngine(std::random_device{}())
+Game::Game()
 {
 	grid = Grid();
-	pieceBag = GetAllPieces();
+	std::random_device rd;
+	randomEngine = std::mt19937(rd());
+	RefillPieceBag();
 	std::shuffle(pieceBag.begin(), pieceBag.end(), randomEngine);
 	currentPiece = GetRandomPiece();
 	nextPiece = GetRandomPiece();
@@ -39,15 +40,19 @@ std::vector<Piece> Game::GetAllPieces()
 
 Piece Game::GetRandomPiece()
 {
-	if (pieceBag.empty())
-	{
-		pieceBag = GetAllPieces();
-		std::shuffle(pieceBag.begin(), pieceBag.end(), randomEngine);
+	if (pieceBag.empty()) {
+		RefillPieceBag();
 	}
 
 	Piece piece = pieceBag.back();
 	pieceBag.pop_back();
 	return piece;
+}
+
+void Game::RefillPieceBag()
+{
+	pieceBag = GetAllPieces();
+	std::shuffle(pieceBag.begin(), pieceBag.end(), randomEngine);
 }
 
 void Game::Draw()
@@ -157,7 +162,6 @@ void Game::HoldPiece()
 
 	std::swap(heldPiece, currentPiece);
 	heldPiece = heldPiece.GetNewPieceCopy();
-	currentPiece = currentPiece.GetNewPieceCopy();
 	canHoldPiece = false;
 }
 
@@ -217,7 +221,7 @@ bool Game::IsPieceOverlapping()
 void Game::ResetGame()
 {
 	grid.Init();
-	pieceBag = GetAllPieces();
+	RefillPieceBag();
 	currentPiece = GetRandomPiece();
 	nextPiece = GetRandomPiece();
 	heldPieceExists = false;

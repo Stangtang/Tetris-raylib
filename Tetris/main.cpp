@@ -2,6 +2,18 @@
 #include "game.h"
 #include <chrono>
 #include "text.h"
+#include <iostream>
+
+// for debug
+//void PrintPieceSequence(Game& game)
+//{
+//	std::cout << "Piece sequence: ";
+//	for (int i = 0; i < 14; i++) {  // 2 full bags
+//		Piece p = game.GetRandomPiece();
+//		std::cout << p.type << " ";
+//	}
+//	std::cout << "\n";
+//}
 
 auto lastPieceLoweringTime = std::chrono::steady_clock::now();
 bool ShouldLowerPiece(std::chrono::steady_clock::time_point& lastPieceLoweringTime)

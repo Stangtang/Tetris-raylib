@@ -27,6 +27,7 @@ private:
 	std::mt19937 randomEngine;
 	std::vector<Piece> pieceBag;
 	Piece GetRandomPiece();
+	void RefillPieceBag();
 	std::vector<Piece> GetAllPieces();
 	void MovePieceLeft();
 	void MovePieceRight();
