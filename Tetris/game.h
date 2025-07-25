@@ -11,10 +11,7 @@ public:
 	Game();
 	~Game();
 	void Draw();
-	void HandleInput();
-	void MovePieceDown();
-	void DropPiece();
-	void HoldPiece();
+	void ProcessInput();
 	void AutoDropPiece();
 	Piece currentPiece;
 	Piece nextPiece;
@@ -32,11 +29,16 @@ private:
 	std::vector<Piece> GetAllPieces();
 	void MovePieceLeft();
 	void MovePieceRight();
+	void MovePieceDown();
+	void DropPiece();
+	void RotatePieceClockwise();
+	void RotatePieceCounterclockwise();
+	void RotatePiece180();
+	void HoldPiece();
+	void AnchorPiece();
 	Grid grid;
 	void ResetGame();
 	bool IsPieceOutsideGrid();
-	void RotatePiece();
-	void AnchorPiece();
 	bool IsPieceOverlapping();
 	void UpdateScoreLineClear(const unsigned short& linesCleared);
 	void UpdateScoreMoveDown(const short& timesMovedDown);
@@ -58,8 +60,8 @@ private:
 	bool ShouldLowerPiece();
 
 	const std::chrono::milliseconds moveDelay{ 110 };
-	const std::chrono::milliseconds rotateDelay{ 180 };
 	const std::chrono::milliseconds softDropDelay{ 110 };
+	const std::chrono::milliseconds rotateDelay{ 180 };
 	TimePoint lastMoveLeftTime = Clock::now();
 	TimePoint lastMoveRightTime = Clock::now();
 	TimePoint lastMoveDownTime = Clock::now();

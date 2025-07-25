@@ -63,7 +63,7 @@ void Game::Draw()
 	currentPiece.Draw();
 }
 
-void Game::HandleInput()
+void Game::ProcessInput()
 {
 	TimePoint now = Clock::now();
 
@@ -83,7 +83,10 @@ void Game::HandleInput()
 	processMovement(KEY_RIGHT, lastMoveRightTime, moveDelay, [&] { MovePieceRight(); });
 	processMovement(KEY_DOWN, lastMoveDownTime, softDropDelay, [&] { MovePieceDown();
 																	 UpdateScoreMoveDown(1); });
-	processMovement(KEY_Z, lastRotateTime, rotateDelay, [&] { RotatePiece(); });
+
+	if (IsKeyPressed(KEY_D)) RotatePieceClockwise();
+	if (IsKeyPressed(KEY_A)) RotatePieceCounterclockwise();
+	if (IsKeyPressed(KEY_S)) RotatePiece180();
 
 	if (IsKeyPressed(KEY_X)) DropPiece();
 	if (IsKeyPressed(KEY_R)) ResetGame();
@@ -92,23 +95,18 @@ void Game::HandleInput()
 
 void Game::MovePieceLeft()
 {
-	if (gameOverFlag) return;
-
 	currentPiece.Move(0, -1);
 	if (IsPieceOutsideGrid() || IsPieceOverlapping()) currentPiece.Move(0, 1);
 }
 
 void Game::MovePieceRight()
 {
-	if (gameOverFlag) return;
-
 	currentPiece.Move(0, 1);
 	if (IsPieceOutsideGrid() || IsPieceOverlapping()) currentPiece.Move(0, -1);
 }
 
 void Game::MovePieceDown()
 {
-	if (gameOverFlag) return;
 
 	currentPiece.Move(1, 0);
 	if (IsPieceOutsideGrid() || IsPieceOverlapping())
@@ -118,25 +116,8 @@ void Game::MovePieceDown()
 	}
 }
 
-void Game::RotatePiece()
-{
-	if (gameOverFlag) return;
-
-	currentPiece.Rotate();
-	if (IsPieceOutsideGrid() || IsPieceOverlapping())
-	{
-		currentPiece.UndoRotation();
-	}
-	else
-	{
-		PlaySound(rotateSound);
-	}
-}
-
 void Game::DropPiece()
 {
-	if (gameOverFlag) return;
-
 	while (!IsPieceOutsideGrid() && !IsPieceOverlapping())
 	{
 		currentPiece.Move(1, 0);
@@ -147,10 +128,49 @@ void Game::DropPiece()
 	AnchorPiece();
 }
 
+void Game::RotatePieceClockwise()
+{
+	currentPiece.RotateClockwise();
+	if (IsPieceOutsideGrid() || IsPieceOverlapping())
+	{
+		currentPiece.RotateCounterclockwise();
+	}
+	else
+	{
+		PlaySound(rotateSound);
+	}
+}
+
+void Game::RotatePieceCounterclockwise()
+{
+	currentPiece.RotateCounterclockwise();
+	if (IsPieceOutsideGrid() || IsPieceOverlapping())
+	{
+		currentPiece.RotateClockwise();
+	}
+	else
+	{
+		PlaySound(rotateSound);
+	}
+}
+
+void Game::RotatePiece180()
+{
+	currentPiece.RotateClockwise();
+	currentPiece.RotateClockwise();
+	if (IsPieceOutsideGrid() || IsPieceOverlapping())
+	{
+		currentPiece.RotateCounterclockwise();
+		currentPiece.RotateCounterclockwise();
+	}
+	else
+	{
+		PlaySound(rotateSound);
+	}
+}
+
 void Game::HoldPiece()
 {
-	if (gameOverFlag) return;
-
 	if (!heldPieceExists)
 	{
 		heldPiece = currentPiece;

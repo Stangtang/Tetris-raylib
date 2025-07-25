@@ -35,13 +35,13 @@ void Piece::Move(int rows, int cols)
 	colOffset += cols;
 }
 
-void Piece::Rotate()
+void Piece::RotateClockwise()
 {
 	rotation++;
 	if (rotation >= occupiedCells.size()) rotation = 0;
 }
 
-void Piece::UndoRotation()
+void Piece::RotateCounterclockwise()
 {
 	rotation--;
 	if (rotation < 0) rotation = occupiedCells.size() - 1;
