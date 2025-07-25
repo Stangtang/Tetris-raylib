@@ -70,7 +70,7 @@ void Game::ProcessInput()
 
 	if (gameOverFlag)
 	{
-		if (IsKeyPressed(KEY_Z) || IsKeyPressed(KEY_R)) ResetGame();
+		if (IsKeyPressed(KEY_R)) ResetGame();
 		return;
 	}
 
@@ -124,7 +124,7 @@ void Game::DropPiece()
 		UpdateScoreMoveDown(1);
 	}
 	currentPiece.Move(-1, 0);
-	UpdateScoreMoveDown(-1);
+	UpdateScoreMoveDown(false);
 	AnchorPiece();
 }
 
@@ -196,8 +196,14 @@ void Game::AnchorPiece()
 	currentPiece = nextPiece;
 	if (IsPieceOverlapping())
 	{
+		while (IsPieceOverlapping())
+		{
+			currentPiece.Move(-1, 0);
+		}
+
 		gameOverFlag = true;
 		PlaySound(gameoverSound);
+		return;
 	}
 	nextPiece = GetRandomPiece();
 	canHoldPiece = true;
@@ -208,8 +214,6 @@ void Game::AnchorPiece()
 		PlaySound(clearSound);
 		UpdateScoreLineClear(linesCleared);
 	}
-
-	// lastMoveLeftTime = lastMoveRightTime = lastMoveDownTime = lastRotateTime = Clock::now();
 }
 
 bool Game::IsPieceOutsideGrid()
@@ -264,7 +268,6 @@ void Game::ResetGame()
 
 	autoDropInterval = initialAutoDropInterval;
 	lastPieceLoweringTime = Clock::now();
-	// lastMoveLeftTime = lastMoveRightTime = lastMoveDownTime = lastRotateTime = Clock::now();
 }
 
 void Game::UpdateScoreLineClear(const unsigned short& linesCleared)
@@ -289,9 +292,9 @@ void Game::UpdateScoreLineClear(const unsigned short& linesCleared)
 	UpdateAutoDropInterval();
 }
 
-void Game::UpdateScoreMoveDown(const short& timesMovedDown)
+void Game::UpdateScoreMoveDown(const bool& movedDown)
 {
-	score += timesMovedDown;
+	score += 2 * movedDown - 1;
 	UpdateAutoDropInterval();
 }
 

@@ -42,7 +42,7 @@ private:
 	bool IsPieceOverlapping();
 	bool IsPiecePositionValid();
 	void UpdateScoreLineClear(const unsigned short& linesCleared);
-	void UpdateScoreMoveDown(const short& timesMovedDown);
+	void UpdateScoreMoveDown(const bool& movedDown);
 	void UpdateAutoDropInterval();
 
 	Sound rotateSound;
