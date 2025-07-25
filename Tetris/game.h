@@ -40,6 +40,7 @@ private:
 	void AnchorPiece();
 	bool IsPieceOutsideGrid();
 	bool IsPieceOverlapping();
+	bool IsPiecePositionValid();
 	void UpdateScoreLineClear(const unsigned short& linesCleared);
 	void UpdateScoreMoveDown(const short& timesMovedDown);
 	void UpdateAutoDropInterval();

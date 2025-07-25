@@ -1,4 +1,5 @@
 // https://harddrop.com/wiki/SRS#Wall_kicks
+// https://chatgpt.com/share/6883fbc8-8314-8009-88a5-f689c4f6cb2e
 
 #include "game.h"
 #include <algorithm>
@@ -85,6 +86,8 @@ void Game::ProcessInput()
 																	 UpdateScoreMoveDown(1); });
 	
 	if (IsKeyPressed(KEY_D)) RotatePieceClockwise();
+	if (IsKeyPressed(KEY_A)) RotatePieceCounterclockwise();
+	if (IsKeyPressed(KEY_S)) RotatePiece180();
 
 	if (IsKeyPressed(KEY_X)) DropPiece();
 	if (IsKeyPressed(KEY_R)) ResetGame();
@@ -94,19 +97,19 @@ void Game::ProcessInput()
 void Game::MovePieceLeft()
 {
 	currentPiece.Move(0, -1);
-	if (IsPieceOutsideGrid() || IsPieceOverlapping()) currentPiece.Move(0, 1);
+	if (!IsPiecePositionValid()) currentPiece.Move(0, 1);
 }
 
 void Game::MovePieceRight()
 {
 	currentPiece.Move(0, 1);
-	if (IsPieceOutsideGrid() || IsPieceOverlapping()) currentPiece.Move(0, -1);
+	if (!IsPiecePositionValid()) currentPiece.Move(0, -1);
 }
 
 void Game::MovePieceDown()
 {
 	currentPiece.Move(1, 0);
-	if (IsPieceOutsideGrid() || IsPieceOverlapping())
+	if (!IsPiecePositionValid())
 	{
 		currentPiece.Move(-1, 0);
 		AnchorPiece();
@@ -115,7 +118,7 @@ void Game::MovePieceDown()
 
 void Game::DropPiece()
 {
-	while (!IsPieceOutsideGrid() && !IsPieceOverlapping())
+	while (IsPiecePositionValid())
 	{
 		currentPiece.Move(1, 0);
 		UpdateScoreMoveDown(1);
@@ -127,10 +130,10 @@ void Game::DropPiece()
 
 void Game::RotatePieceClockwise()
 {
-	currentPiece.RotateClockwise();
-	if (IsPieceOutsideGrid() || IsPieceOverlapping())
+	currentPiece.Rotate(1);
+	if (!IsPiecePositionValid())
 	{
-		currentPiece.RotateCounterclockwise();
+		currentPiece.Rotate(-1);
 	}
 	else
 	{
@@ -140,10 +143,10 @@ void Game::RotatePieceClockwise()
 
 void Game::RotatePieceCounterclockwise()
 {
-	currentPiece.RotateCounterclockwise();
-	if (IsPieceOutsideGrid() || IsPieceOverlapping())
+	currentPiece.Rotate(-1);
+	if (!IsPiecePositionValid())
 	{
-		currentPiece.RotateClockwise();
+		currentPiece.Rotate(1);
 	}
 	else
 	{
@@ -153,10 +156,10 @@ void Game::RotatePieceCounterclockwise()
 
 void Game::RotatePiece180()
 {
-	currentPiece.Rotate180();
-	if (IsPieceOutsideGrid() || IsPieceOverlapping())
+	currentPiece.Rotate(2);
+	if (!IsPiecePositionValid())
 	{
-		currentPiece.Rotate180();
+		currentPiece.Rotate(2);
 	}
 	else
 	{
@@ -184,7 +187,7 @@ void Game::HoldPiece()
 
 void Game::AnchorPiece()
 {
-	std::vector<Position> cellPositions = currentPiece.GetCellPositions();
+	const std::vector<Position> cellPositions = currentPiece.GetCellPositions();
 	for (const Position& pos : cellPositions)
 	{
 		grid.grid[pos.row][pos.col] = currentPiece.type;
@@ -211,7 +214,7 @@ void Game::AnchorPiece()
 
 bool Game::IsPieceOutsideGrid()
 {
-	std::vector<Position> cellPositions = currentPiece.GetCellPositions();
+	const std::vector<Position> cellPositions = currentPiece.GetCellPositions();
 	for (const Position& pos : cellPositions)
 	{
 		if (grid.IsCellOutsideGrid(pos.row, pos.col))
@@ -224,7 +227,7 @@ bool Game::IsPieceOutsideGrid()
 
 bool Game::IsPieceOverlapping()
 {
-	std::vector<Position> cellPositions = currentPiece.GetCellPositions();
+	const std::vector<Position> cellPositions = currentPiece.GetCellPositions();
 	for (const Position& pos : cellPositions)
 	{
 		if (!grid.IsCellEmpty(pos.row, pos.col))
@@ -233,6 +236,19 @@ bool Game::IsPieceOverlapping()
 		}
 	}
 	return false;
+}
+
+bool Game::IsPiecePositionValid()
+{
+	const std::vector<Position>& cellPositions = currentPiece.GetCellPositions();
+	for (const Position& pos : cellPositions)
+	{
+		if (grid.IsCellOutsideGrid(pos.row, pos.col) || !grid.IsCellEmpty(pos.row, pos.col))
+		{
+			return false;
+		}
+	}
+	return true;
 }
 
 void Game::ResetGame()

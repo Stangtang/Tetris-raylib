@@ -13,7 +13,7 @@ Piece::Piece()
 
 void Piece::Draw()
 {
-	std::vector<Position> cellPositions = GetCellPositions();
+	const std::vector<Position> cellPositions = GetCellPositions();
 	for (const Position& pos : cellPositions)
 	{
 		DrawRectangle(pos.col * cellSize + 1 + 15, pos.row * cellSize + 1 + 15, cellSize - 1, cellSize - 1, colors[type]);
@@ -22,7 +22,7 @@ void Piece::Draw()
 
 void Piece::Draw(int PixelOffsetX, int PixelOffsetY)
 {
-	std::vector<Position> cellPositions = GetCellPositions();
+	const std::vector<Position> cellPositions = GetCellPositions();
 	for (const Position& pos : cellPositions)
 	{
 		DrawRectangle(pos.col * cellSize + PixelOffsetX, pos.row * cellSize + PixelOffsetY, cellSize - 1, cellSize - 1, colors[type]);
@@ -35,24 +35,14 @@ void Piece::Move(int rows, int cols)
 	colOffset += cols;
 }
 
-void Piece::RotateClockwise()
+void Piece::Rotate(int direction)
 {
-	rotation = (rotation + 1) % 4;
-}
-
-void Piece::RotateCounterclockwise()
-{
-	rotation = (rotation - 1 + 4) % 4;
-}
-
-void Piece::Rotate180()
-{
-	rotation = (rotation + 2) % 4;
+	rotation = (rotation + direction + 4) % 4;
 }
 
 std::vector<Position> Piece::GetCellPositions()
 {
-	std::vector<Position> cellPositions = occupiedCells[rotation];
+	const std::vector<Position> cellPositions = occupiedCells[rotation];
 	std::vector<Position> movedTiles;
 	for (const Position& pos : cellPositions)
 	{
