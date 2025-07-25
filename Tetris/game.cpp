@@ -82,7 +82,7 @@ void Game::HandleInput()
 	processMovement(KEY_LEFT, lastMoveLeftTime, moveDelay, [&] { MovePieceLeft(); });
 	processMovement(KEY_RIGHT, lastMoveRightTime, moveDelay, [&] { MovePieceRight(); });
 	processMovement(KEY_DOWN, lastMoveDownTime, softDropDelay, [&] { MovePieceDown();
-																	 UpdateScore(0, 1); });
+																	 UpdateScoreMoveDown(1); });
 	processMovement(KEY_Z, lastRotateTime, rotateDelay, [&] { RotatePiece(); });
 
 	if (IsKeyPressed(KEY_X)) DropPiece();
@@ -140,10 +140,10 @@ void Game::DropPiece()
 	while (!IsPieceOutsideGrid() && !IsPieceOverlapping())
 	{
 		currentPiece.Move(1, 0);
-		UpdateScore(0, 1);
+		UpdateScoreMoveDown(1);
 	}
 	currentPiece.Move(-1, 0);
-	UpdateScore(0, -1);
+	UpdateScoreMoveDown(-1);
 	AnchorPiece();
 }
 
@@ -201,7 +201,7 @@ void Game::AnchorPiece()
 	if (linesCleared > 0)
 	{
 		PlaySound(clearSound);
-		UpdateScore(linesCleared, 0);
+		UpdateScoreLineClear(linesCleared);
 	}
 
 	// lastMoveLeftTime = lastMoveRightTime = lastMoveDownTime = lastRotateTime = Clock::now();
@@ -236,7 +236,7 @@ void Game::ResetGame()
 	// lastMoveLeftTime = lastMoveRightTime = lastMoveDownTime = lastRotateTime = Clock::now();
 }
 
-void Game::UpdateScore(const unsigned short& linesCleared, const short& timesMovedDown)
+void Game::UpdateScoreLineClear(const unsigned short& linesCleared)
 {
 	switch (linesCleared)
 	{
@@ -255,8 +255,17 @@ void Game::UpdateScore(const unsigned short& linesCleared, const short& timesMov
 	default:
 		break;
 	}
-	score += timesMovedDown;
+	UpdateAutoDropInterval();
+}
 
+void Game::UpdateScoreMoveDown(const short& timesMovedDown)
+{
+	score += timesMovedDown;
+	UpdateAutoDropInterval();
+}
+
+void Game::UpdateAutoDropInterval()
+{
 	autoDropInterval = std::chrono::milliseconds{ std::max(finalAutoDropInterval.count(), static_cast<long long> (initialAutoDropInterval.count() - score * autoDropIntervalDecreasePerScore)) };
 }
 

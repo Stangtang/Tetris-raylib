@@ -38,7 +38,9 @@ private:
 	void RotatePiece();
 	void AnchorPiece();
 	bool IsPieceOverlapping();
-	void UpdateScore(const unsigned short& linesCleared, const short& timesMovedDown);
+	void UpdateScoreLineClear(const unsigned short& linesCleared);
+	void UpdateScoreMoveDown(const short& timesMovedDown);
+	void UpdateAutoDropInterval();
 
 	Sound rotateSound;
 	Sound clearSound;
