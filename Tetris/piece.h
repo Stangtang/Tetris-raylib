@@ -13,8 +13,9 @@ public:
 	void Draw();
 	void Draw(int PixelOffsetX, int PixelOffsetY);
 	void Move(int rows, int cols);
-	void Rotate();
-	void UndoRotation();
+	void RotateClockwise();
+	void RotateCounterclockwise();
+	void Rotate180();
 	std::vector<Position> GetCellPositions();
 	std::map<int, std::vector<Position>> occupiedCells;
 	Piece GetNewPieceCopy();

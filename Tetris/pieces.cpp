@@ -6,10 +6,6 @@ public:
 	IPiece()
 	{
 		type = 1;
-		//cells[1] = { Position(1, 0), Position(1, 1), Position(1, 2), Position(1, 3) };
-		//cells[2] = { Position(0, 2), Position(1, 2), Position(2, 2), Position(3, 2) };
-		//cells[3] = { Position(2, 0), Position(2, 1), Position(2, 2), Position(2, 3) };
-		//cells[0] = { Position(0, 1), Position(1, 1), Position(2, 1), Position(3, 1) };
 		occupiedCells[0] = { Position(1, 0), Position(1, 1), Position(1, 2), Position(1, 3) };
 		occupiedCells[1] = { Position(0, 2), Position(1, 2), Position(2, 2), Position(3, 2) };
 		occupiedCells[2] = { Position(2, 0), Position(2, 1), Position(2, 2), Position(2, 3) };
@@ -23,7 +19,10 @@ public:
 	OPiece()
 	{
 		type = 2;
-		occupiedCells[0] = { Position(0, 0), Position(0, 1), Position(1, 0), Position(1, 1) };
+		occupiedCells[0] = 
+		occupiedCells[1] = 
+		occupiedCells[2] = 
+		occupiedCells[3] = { Position(0, 0), Position(0, 1), Position(1, 0), Position(1, 1) };
 		Move(0, 4);
 	}
 };

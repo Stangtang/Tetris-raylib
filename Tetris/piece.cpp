@@ -35,16 +35,19 @@ void Piece::Move(int rows, int cols)
 	colOffset += cols;
 }
 
-void Piece::Rotate()
+void Piece::RotateClockwise()
 {
-	rotation++;
-	if (rotation >= occupiedCells.size()) rotation = 0;
+	rotation = (rotation + 1) % 4;
 }
 
-void Piece::UndoRotation()
+void Piece::RotateCounterclockwise()
 {
-	rotation--;
-	if (rotation < 0) rotation = occupiedCells.size() - 1;
+	rotation = (rotation - 1 + 4) % 4;
+}
+
+void Piece::Rotate180()
+{
+	rotation = (rotation + 2) % 4;
 }
 
 std::vector<Position> Piece::GetCellPositions()
