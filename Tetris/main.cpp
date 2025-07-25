@@ -15,7 +15,7 @@ int main()
 
 	while (!WindowShouldClose())
 	{
-		game.ProcessInput();
+		game.HandleInput();
 		game.AutoDropPiece();
 
 		BeginDrawing();
