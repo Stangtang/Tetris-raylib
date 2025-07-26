@@ -9,13 +9,13 @@ class Piece
 {
 public:
 	Piece();
-	int type;
+	unsigned short type;
 	void Draw();
 	void Draw(int PixelOffsetX, int PixelOffsetY);
 	void Move(int rows, int cols);
-	void Rotate(int direction);
+	void Rotate(int numTimes);
 	std::vector<Position> GetCellPositions();
-	std::map<int, std::vector<Position>> occupiedCells;
+	std::map<unsigned short, std::vector<Position>> occupiedCells;
 	Piece GetNewPieceCopy();
 
 private:

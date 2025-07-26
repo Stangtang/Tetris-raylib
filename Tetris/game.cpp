@@ -1,5 +1,4 @@
 // https://harddrop.com/wiki/SRS#Wall_kicks
-// https://chatgpt.com/share/6883fbc8-8314-8009-88a5-f689c4f6cb2e
 
 #include "game.h"
 #include <algorithm>
@@ -265,7 +264,6 @@ void Game::ResetGame()
 	canHoldPiece = true;
 	gameOverFlag = false;
 	score = 0;
-
 	autoDropInterval = initialAutoDropInterval;
 	lastPieceLoweringTime = Clock::now();
 }

@@ -1,4 +1,4 @@
-#include "text.h"
+#include "ui_text.h"
 #include <iostream>
 
 const int fontSize = 50;

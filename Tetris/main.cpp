@@ -1,7 +1,7 @@
 #include "raylib.h"
 #include "game.h"
 #include <chrono>
-#include "text.h"
+#include "ui_text.h"
 #include <iostream>
 
 int main()

@@ -35,9 +35,9 @@ void Piece::Move(int rows, int cols)
 	colOffset += cols;
 }
 
-void Piece::Rotate(int direction)
+void Piece::Rotate(int numTimes)
 {
-	rotation = (rotation + direction + 4) % 4;
+	rotation = (rotation + numTimes + 4) % 4;
 }
 
 std::vector<Position> Piece::GetCellPositions()

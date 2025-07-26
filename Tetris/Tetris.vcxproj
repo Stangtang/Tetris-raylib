@@ -131,7 +131,7 @@
     <ClCompile Include="grid.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="position.cpp" />
-    <ClCompile Include="text.cpp" />
+    <ClCompile Include="ui_text.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="piece.h" />
@@ -139,7 +139,7 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="grid.h" />
     <ClInclude Include="position.h" />
-    <ClInclude Include="text.h" />
+    <ClInclude Include="ui_text.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Font\monogram.ttf" />
