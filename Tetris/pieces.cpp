@@ -11,6 +11,15 @@ public:
 		occupiedCells[2] = { Position(2, 0), Position(2, 1), Position(2, 2), Position(2, 3) };
 		occupiedCells[3] = { Position(0, 1), Position(1, 1), Position(2, 1), Position(3, 1) };
 		Move(-1, 3);
+
+		wallKickTable[std::make_pair(0, 1)] = { Displacement(0,0), Displacement(-2,0), Displacement(1,0), Displacement(-2,-1), Displacement(1,2) };
+		wallKickTable[std::make_pair(1, 0)] = { Displacement(0,0), Displacement(2,0), Displacement(-1,0), Displacement(2,1), Displacement(-1,-2) };
+		wallKickTable[std::make_pair(1, 2)] = { Displacement(0,0), Displacement(-1,0), Displacement(2,0), Displacement(-1,2), Displacement(2,-1) };
+		wallKickTable[std::make_pair(2, 1)] = { Displacement(0,0), Displacement(1,0), Displacement(-2,0), Displacement(1,-2), Displacement(-2,1) };
+		wallKickTable[std::make_pair(2, 3)] = { Displacement(0,0), Displacement(2,0), Displacement(-1,0), Displacement(2,1), Displacement(-1,-2) };
+		wallKickTable[std::make_pair(3, 2)] = { Displacement(0,0), Displacement(-2,0), Displacement(1,0), Displacement(-2,-1), Displacement(1,2) };
+		wallKickTable[std::make_pair(3, 0)] = { Displacement(0,0), Displacement(1,0), Displacement(-2,0), Displacement(1,-2), Displacement(-2,1) };
+		wallKickTable[std::make_pair(0, 3)] = { Displacement(0,0), Displacement(-1,0), Displacement(2,0), Displacement(-2,2), Displacement(2,-1) };
 	}
 };
 
@@ -37,6 +46,15 @@ public:
 		occupiedCells[2] = { Position(1, 0), Position(1, 1), Position(1, 2), Position(2, 1) };
 		occupiedCells[3] = { Position(0, 1), Position(1, 0), Position(1, 1), Position(2, 1) };
 		Move(0, 3);
+
+		wallKickTable[std::make_pair(0, 1)] = { Displacement(0,0), Displacement(-1,0), Displacement(-1,1), Displacement(0,-2), Displacement(-1,-2) };
+		wallKickTable[std::make_pair(1, 0)] = { Displacement(0,0), Displacement(1,0), Displacement(1,-1), Displacement(0,2), Displacement(1,2) };
+		wallKickTable[std::make_pair(1, 2)] = { Displacement(0,0), Displacement(+1,0), Displacement(1,-1), Displacement(0,2), Displacement(1,2) };
+		wallKickTable[std::make_pair(2, 1)] = { Displacement(0,0), Displacement(-1,0), Displacement(-1,1), Displacement(0,-2), Displacement(-1,-2) };
+		wallKickTable[std::make_pair(2, 3)] = { Displacement(0,0), Displacement(1,0), Displacement(1,1), Displacement(0,-2), Displacement(1,-2) };
+		wallKickTable[std::make_pair(3, 2)] = { Displacement(0,0), Displacement(-1,0), Displacement(-1,-1), Displacement(0,2), Displacement(-1,2) };
+		wallKickTable[std::make_pair(3, 0)] = { Displacement(0,0), Displacement(-1,0), Displacement(-1,-1), Displacement(0,2), Displacement(-1,2) };
+		wallKickTable[std::make_pair(0, 3)] = { Displacement(0,0), Displacement(1,0), Displacement(1,1), Displacement(0,-2), Displacement(1,-2) };
 	}
 };
 
@@ -50,6 +68,15 @@ public:
 		occupiedCells[2] = { Position(1, 0), Position(1, 1), Position(1, 2), Position(2, 0) };
 		occupiedCells[3] = { Position(0, 0), Position(0, 1), Position(1, 1), Position(2, 1) };
 		Move(0, 3);
+
+		wallKickTable[std::make_pair(0, 1)] = { Displacement(0,0), Displacement(-1,0), Displacement(-1,1), Displacement(0,-2), Displacement(-1,-2) };
+		wallKickTable[std::make_pair(1, 0)] = { Displacement(0,0), Displacement(1,0), Displacement(1,-1), Displacement(0,2), Displacement(1,2) };
+		wallKickTable[std::make_pair(1, 2)] = { Displacement(0,0), Displacement(+1,0), Displacement(1,-1), Displacement(0,2), Displacement(1,2) };
+		wallKickTable[std::make_pair(2, 1)] = { Displacement(0,0), Displacement(-1,0), Displacement(-1,1), Displacement(0,-2), Displacement(-1,-2) };
+		wallKickTable[std::make_pair(2, 3)] = { Displacement(0,0), Displacement(1,0), Displacement(1,1), Displacement(0,-2), Displacement(1,-2) };
+		wallKickTable[std::make_pair(3, 2)] = { Displacement(0,0), Displacement(-1,0), Displacement(-1,-1), Displacement(0,2), Displacement(-1,2) };
+		wallKickTable[std::make_pair(3, 0)] = { Displacement(0,0), Displacement(-1,0), Displacement(-1,-1), Displacement(0,2), Displacement(-1,2) };
+		wallKickTable[std::make_pair(0, 3)] = { Displacement(0,0), Displacement(1,0), Displacement(1,1), Displacement(0,-2), Displacement(1,-2) };
 	}
 };
 
@@ -63,6 +90,15 @@ public:
 		occupiedCells[2] = { Position(1, 0), Position(1, 1), Position(1, 2), Position(2, 2) };
 		occupiedCells[3] = { Position(0, 1), Position(1, 1), Position(2, 0), Position(2, 1) };
 		Move(0, 3);
+
+		wallKickTable[std::make_pair(0, 1)] = { Displacement(0,0), Displacement(-1,0), Displacement(-1,1), Displacement(0,-2), Displacement(-1,-2) };
+		wallKickTable[std::make_pair(1, 0)] = { Displacement(0,0), Displacement(1,0), Displacement(1,-1), Displacement(0,2), Displacement(1,2) };
+		wallKickTable[std::make_pair(1, 2)] = { Displacement(0,0), Displacement(+1,0), Displacement(1,-1), Displacement(0,2), Displacement(1,2) };
+		wallKickTable[std::make_pair(2, 1)] = { Displacement(0,0), Displacement(-1,0), Displacement(-1,1), Displacement(0,-2), Displacement(-1,-2) };
+		wallKickTable[std::make_pair(2, 3)] = { Displacement(0,0), Displacement(1,0), Displacement(1,1), Displacement(0,-2), Displacement(1,-2) };
+		wallKickTable[std::make_pair(3, 2)] = { Displacement(0,0), Displacement(-1,0), Displacement(-1,-1), Displacement(0,2), Displacement(-1,2) };
+		wallKickTable[std::make_pair(3, 0)] = { Displacement(0,0), Displacement(-1,0), Displacement(-1,-1), Displacement(0,2), Displacement(-1,2) };
+		wallKickTable[std::make_pair(0, 3)] = { Displacement(0,0), Displacement(1,0), Displacement(1,1), Displacement(0,-2), Displacement(1,-2) };
 	}
 };
 
@@ -76,6 +112,15 @@ public:
 		occupiedCells[2] = { Position(1, 1), Position(1, 2), Position(2, 0), Position(2, 1) };
 		occupiedCells[3] = { Position(0, 0), Position(1, 0), Position(1, 1), Position(2, 1) };
 		Move(0, 3);
+
+		wallKickTable[std::make_pair(0, 1)] = { Displacement(0,0), Displacement(-1,0), Displacement(-1,1), Displacement(0,-2), Displacement(-1,-2) };
+		wallKickTable[std::make_pair(1, 0)] = { Displacement(0,0), Displacement(1,0), Displacement(1,-1), Displacement(0,2), Displacement(1,2) };
+		wallKickTable[std::make_pair(1, 2)] = { Displacement(0,0), Displacement(+1,0), Displacement(1,-1), Displacement(0,2), Displacement(1,2) };
+		wallKickTable[std::make_pair(2, 1)] = { Displacement(0,0), Displacement(-1,0), Displacement(-1,1), Displacement(0,-2), Displacement(-1,-2) };
+		wallKickTable[std::make_pair(2, 3)] = { Displacement(0,0), Displacement(1,0), Displacement(1,1), Displacement(0,-2), Displacement(1,-2) };
+		wallKickTable[std::make_pair(3, 2)] = { Displacement(0,0), Displacement(-1,0), Displacement(-1,-1), Displacement(0,2), Displacement(-1,2) };
+		wallKickTable[std::make_pair(3, 0)] = { Displacement(0,0), Displacement(-1,0), Displacement(-1,-1), Displacement(0,2), Displacement(-1,2) };
+		wallKickTable[std::make_pair(0, 3)] = { Displacement(0,0), Displacement(1,0), Displacement(1,1), Displacement(0,-2), Displacement(1,-2) };
 	}
 };
 
@@ -89,5 +134,14 @@ public:
 		occupiedCells[2] = { Position(1, 0), Position(1, 1), Position(2, 1), Position(2, 2) };
 		occupiedCells[3] = { Position(0, 1), Position(1, 0), Position(1, 1), Position(2, 0) };
 		Move(0, 3);
+
+		wallKickTable[std::make_pair(0, 1)] = { Displacement(0,0), Displacement(-1,0), Displacement(-1,1), Displacement(0,-2), Displacement(-1,-2) };
+		wallKickTable[std::make_pair(1, 0)] = { Displacement(0,0), Displacement(1,0), Displacement(1,-1), Displacement(0,2), Displacement(1,2) };
+		wallKickTable[std::make_pair(1, 2)] = { Displacement(0,0), Displacement(+1,0), Displacement(1,-1), Displacement(0,2), Displacement(1,2) };
+		wallKickTable[std::make_pair(2, 1)] = { Displacement(0,0), Displacement(-1,0), Displacement(-1,1), Displacement(0,-2), Displacement(-1,-2) };
+		wallKickTable[std::make_pair(2, 3)] = { Displacement(0,0), Displacement(1,0), Displacement(1,1), Displacement(0,-2), Displacement(1,-2) };
+		wallKickTable[std::make_pair(3, 2)] = { Displacement(0,0), Displacement(-1,0), Displacement(-1,-1), Displacement(0,2), Displacement(-1,2) };
+		wallKickTable[std::make_pair(3, 0)] = { Displacement(0,0), Displacement(-1,0), Displacement(-1,-1), Displacement(0,2), Displacement(-1,2) };
+		wallKickTable[std::make_pair(0, 3)] = { Displacement(0,0), Displacement(1,0), Displacement(1,1), Displacement(0,-2), Displacement(1,-2) };
 	}
 };

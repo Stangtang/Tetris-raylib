@@ -130,39 +130,72 @@ void Game::DropPiece()
 void Game::RotatePieceClockwise()
 {
 	currentPiece.Rotate(1);
-	if (!IsPiecePositionValid())
-	{
-		currentPiece.Rotate(-1);
-	}
-	else
+	if (IsPiecePositionValid() || currentPiece.type == 2)
 	{
 		PlaySound(rotateSound);
+		return;
+	}
+
+	int from = currentPiece.GetRotation(-1);
+	int to = currentPiece.GetRotation(0);
+	auto wallKickTests = currentPiece.wallKickTable[std::make_pair(from, to)];
+	for (auto dis : wallKickTests)
+	{
+		currentPiece.Move(dis.y * -1, dis.x);
+		if (IsPiecePositionValid())
+		{
+			PlaySound(rotateSound);
+			return;
+		}
+		currentPiece.Move(dis.y, dis.x * -1);
 	}
 }
 
 void Game::RotatePieceCounterclockwise()
 {
 	currentPiece.Rotate(-1);
-	if (!IsPiecePositionValid())
-	{
-		currentPiece.Rotate(1);
-	}
-	else
+	if (IsPiecePositionValid() || currentPiece.type == 2)
 	{
 		PlaySound(rotateSound);
+		return;
+	}
+
+	int from = currentPiece.GetRotation(1);
+	int to = currentPiece.GetRotation(0);
+	auto wallKickTests = currentPiece.wallKickTable[std::make_pair(from, to)];
+	for (auto dis : wallKickTests)
+	{
+		currentPiece.Move(dis.y * -1, dis.x);
+		if (IsPiecePositionValid())
+		{
+			PlaySound(rotateSound);
+			return;
+		}
+		currentPiece.Move(dis.y, dis.x * -1);
 	}
 }
 
 void Game::RotatePiece180()
 {
 	currentPiece.Rotate(2);
-	if (!IsPiecePositionValid())
-	{
-		currentPiece.Rotate(2);
-	}
-	else
+	if (IsPiecePositionValid() || currentPiece.type == 2)
 	{
 		PlaySound(rotateSound);
+		return;
+	}
+
+	int from = currentPiece.GetRotation(-2);
+	int to = currentPiece.GetRotation(0);
+	auto wallKickTests = currentPiece.wallKickTable[std::make_pair(from, to)];
+	for (auto dis : wallKickTests)
+	{
+		currentPiece.Move(dis.y * -1, dis.x);
+		if (IsPiecePositionValid())
+		{
+			PlaySound(rotateSound);
+			return;
+		}
+		currentPiece.Move(dis.y, dis.x * -1);
 	}
 }
 
@@ -171,7 +204,7 @@ void Game::HoldPiece()
 	if (!heldPieceExists)
 	{
 		heldPiece = currentPiece;
-		heldPiece = heldPiece.GetNewPieceCopy();
+		heldPiece = heldPiece.NewCopy();
 		currentPiece = nextPiece;
 		nextPiece = GetRandomPiece();
 		heldPieceExists = true;
@@ -180,7 +213,7 @@ void Game::HoldPiece()
 	}
 
 	std::swap(heldPiece, currentPiece);
-	heldPiece = heldPiece.GetNewPieceCopy();
+	heldPiece = heldPiece.NewCopy();
 	canHoldPiece = false;
 }
 

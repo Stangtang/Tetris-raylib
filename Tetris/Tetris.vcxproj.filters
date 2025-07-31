@@ -39,6 +39,9 @@
     <ClCompile Include="ui_text.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="displacement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="grid.h">
@@ -57,6 +60,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ui_text.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="displacement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

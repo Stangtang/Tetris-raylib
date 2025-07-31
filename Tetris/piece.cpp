@@ -37,22 +37,27 @@ void Piece::Move(int rows, int cols)
 
 void Piece::Rotate(int numTimes)
 {
-	rotation = (rotation + numTimes + 4) % 4;
+	rotation = GetRotation(numTimes);
+}
+
+int Piece::GetRotation(int numTimes)
+{
+	return (rotation + numTimes + 4) % 4;
 }
 
 std::vector<Position> Piece::GetCellPositions()
 {
 	const std::vector<Position> cellPositions = occupiedCells[rotation];
-	std::vector<Position> movedTiles;
+	std::vector<Position> tiles;
 	for (const Position& pos : cellPositions)
 	{
 		Position newPos = Position(pos.row + rowOffset, pos.col + colOffset);
-		movedTiles.push_back(newPos);
+		tiles.push_back(newPos);
 	}
-	return movedTiles;
+	return tiles;
 }
 
-Piece Piece::GetNewPieceCopy()
+Piece Piece::NewCopy()
 {
 	switch (type)
 	{
