@@ -1,5 +1,3 @@
-// https://harddrop.com/wiki/SRS#Wall_kicks
-
 #include "game.h"
 #include <algorithm>
 
@@ -84,11 +82,11 @@ void Game::ProcessInput()
 	processMovement(KEY_DOWN, lastMoveDownTime, softDropDelay, [&] { MovePieceDown();
 																	 UpdateScoreMoveDown(1); });
 	
-	if (IsKeyPressed(KEY_D)) RotatePieceClockwise();
-	if (IsKeyPressed(KEY_A)) RotatePieceCounterclockwise();
-	if (IsKeyPressed(KEY_S)) RotatePiece180();
+	if (IsKeyPressed(KEY_X)) RotatePieceClockwise();
+	if (IsKeyPressed(KEY_Z)) RotatePieceCounterclockwise();
+	if (IsKeyPressed(KEY_A)) RotatePiece180();
 
-	if (IsKeyPressed(KEY_X)) DropPiece();
+	if (IsKeyPressed(KEY_SPACE)) DropPiece();
 	if (IsKeyPressed(KEY_R)) ResetGame();
 	if (IsKeyPressed(KEY_C) && canHoldPiece) HoldPiece();
 }
