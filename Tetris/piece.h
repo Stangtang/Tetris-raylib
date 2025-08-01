@@ -1,10 +1,9 @@
 #pragma once
 
-#include "position.h"
+#include "structs.h"
 #include <vector>
 #include <map>
 #include "colors.h"
-#include "displacement.h"
 #include <utility>
 
 class Piece

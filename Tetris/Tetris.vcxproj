@@ -130,18 +130,15 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="grid.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="position.cpp" />
     <ClCompile Include="ui_text.cpp" />
-    <ClCompile Include="displacement.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="piece.h" />
     <ClInclude Include="colors.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="grid.h" />
-    <ClInclude Include="position.h" />
+    <ClInclude Include="structs.h" />
     <ClInclude Include="ui_text.h" />
-    <ClInclude Include="displacement.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Font\monogram.ttf" />

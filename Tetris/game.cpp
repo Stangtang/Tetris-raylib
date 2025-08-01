@@ -134,10 +134,10 @@ void Game::RotatePieceClockwise()
 		return;
 	}
 
-	int from = currentPiece.GetRotation(-1);
-	int to = currentPiece.GetRotation(0);
-	auto wallKickTests = currentPiece.wallKickTable[std::make_pair(from, to)];
-	for (auto dis : wallKickTests)
+	const int from = currentPiece.GetRotation(-1);
+	const int to = currentPiece.GetRotation(0);
+	const auto wallKickTests = currentPiece.wallKickTable[std::make_pair(from, to)];
+	for (const auto& dis : wallKickTests)
 	{
 		currentPiece.Move(dis.y * -1, dis.x);
 		if (IsPiecePositionValid())
@@ -158,10 +158,10 @@ void Game::RotatePieceCounterclockwise()
 		return;
 	}
 
-	int from = currentPiece.GetRotation(1);
-	int to = currentPiece.GetRotation(0);
-	auto wallKickTests = currentPiece.wallKickTable[std::make_pair(from, to)];
-	for (auto dis : wallKickTests)
+	const int from = currentPiece.GetRotation(1);
+	const int to = currentPiece.GetRotation(0);
+	const auto wallKickTests = currentPiece.wallKickTable[std::make_pair(from, to)];
+	for (const auto& dis : wallKickTests)
 	{
 		currentPiece.Move(dis.y * -1, dis.x);
 		if (IsPiecePositionValid())
@@ -182,10 +182,10 @@ void Game::RotatePiece180()
 		return;
 	}
 
-	int from = currentPiece.GetRotation(-2);
-	int to = currentPiece.GetRotation(0);
-	auto wallKickTests = currentPiece.wallKickTable[std::make_pair(from, to)];
-	for (auto dis : wallKickTests)
+	const int from = currentPiece.GetRotation(-2);
+	const int to = currentPiece.GetRotation(0);
+	const auto wallKickTests = currentPiece.wallKickTable[std::make_pair(from, to)];
+	for (const auto& dis : wallKickTests)
 	{
 		currentPiece.Move(dis.y * -1, dis.x);
 		if (IsPiecePositionValid())
@@ -329,7 +329,11 @@ void Game::UpdateScoreMoveDown(const bool& movedDown)
 
 void Game::UpdateAutoDropInterval()
 {
+	// only recalculate every 100 points
+	if (!(score / 100 > lastIntervalScore / 100)) return;
+
 	autoDropInterval = std::chrono::milliseconds{ std::max(finalAutoDropInterval.count(), static_cast<long long> (initialAutoDropInterval.count() - score * autoDropIntervalDecreasePerScore)) };
+	lastIntervalScore = score;
 }
 
 void Game::AutoDropPiece()
