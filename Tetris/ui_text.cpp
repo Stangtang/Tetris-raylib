@@ -56,20 +56,11 @@ void DrawSidePanel(const Game& game)
 
 void DrawScore(const Game& game)
 {
-	static unsigned long long lastScore = -1;
-	static char scoreNumberText[20];
-	static Vector2 scoreNumberSize;
-
 	DrawTextEx(font, "Score", { 540 - scoreTextSize.x / 2, 5 }, fontSize, 2, BLACK);
 	DrawRectangleRounded({ 540 - 225 / 2, 70, 225, 80 }, 0.3, 6, GRAY);
-
-	if (game.score != lastScore) {
-		snprintf(scoreNumberText, sizeof(scoreNumberText), "%llu", game.score);
-		scoreNumberSize = MeasureTextEx(scoreFont, scoreNumberText, scoreFontSize, 2);
-		lastScore = game.score;
-	}
-
-	DrawTextEx(scoreFont, scoreNumberText, { 540 - scoreNumberSize.x / 2, (70 + 80) / 2 + 13 }, scoreFontSize, 2, BLACK);
+	char scoreNumberText[10];
+	snprintf(scoreNumberText, sizeof(scoreNumberText), "%d", game.score);
+	DrawTextEx(scoreFont, scoreNumberText, { 540 - MeasureTextEx(scoreFont, scoreNumberText, scoreFontSize, 2).x / 2, (70 + 80) / 2 + 13 }, scoreFontSize, 2, BLACK);
 }
 
 void DrawNext(const Game& game)

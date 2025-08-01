@@ -8,7 +8,7 @@ int main()
 {
 	InitWindow(15 + 400 + 250, 15 + 800 + 15, "Tetris");
 	//SetTargetFPS(GetMonitorRefreshRate(GetCurrentMonitor()));
-	SetTargetFPS(120);
+	SetTargetFPS(60);
 
 	LoadFonts();
 

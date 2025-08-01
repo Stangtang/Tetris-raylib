@@ -59,7 +59,6 @@ private:
 	std::chrono::milliseconds autoDropInterval = initialAutoDropInterval;
 	const double autoDropIntervalDecreasePerScore = static_cast<double> (finalAutoDropInterval.count() - initialAutoDropInterval.count()) / finalAutoDropIntervalScore * -1;
 	bool ShouldLowerPiece();
-	unsigned long long lastIntervalScore = 0;
 
 	const std::chrono::milliseconds moveDelay{ 110 };
 	const std::chrono::milliseconds rotateDelay{ 180 };
