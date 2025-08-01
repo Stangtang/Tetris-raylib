@@ -1,7 +1,6 @@
 // https://harddrop.com/wiki/SRS#Wall_kicks
 
 #include "piece.h"
-#include "position.h"
 
 class IPiece : public Piece {
 public:
