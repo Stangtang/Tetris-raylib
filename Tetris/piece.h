@@ -17,7 +17,7 @@ public:
 	void Rotate(int numTimes);
 	int GetRotation(int numTimes);
 	std::vector<Position> GetCellPositions();
-	std::map<unsigned short, std::vector<Position>> occupiedCells;
+	std::map<short, std::vector<Position>> occupiedCells;
 	Piece NewCopy();
 	std::map<std::pair<int, int>, std::vector<Displacement>> wallKickTable;
 
