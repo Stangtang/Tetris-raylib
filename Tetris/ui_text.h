@@ -23,3 +23,5 @@ void DrawScore(const Game& game);
 void DrawNext(const Game& game);
 void DrawHeld(const Game& game, const bool& heldPieceExists);
 void DrawGameOver();
+
+void DrawBottomText();

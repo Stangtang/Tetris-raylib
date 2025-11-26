@@ -6,7 +6,7 @@
 
 int main()
 {
-	InitWindow(15 + 400 + 250, 15 + 800 + 15, "Tetris");
+	InitWindow(15 + 400 + 250, 15 + 800 + 15 + 45, "Tetris");
 	//SetTargetFPS(GetMonitorRefreshRate(GetCurrentMonitor()));
 	SetTargetFPS(120);
 
@@ -23,6 +23,8 @@ int main()
 			ClearBackground(LIGHTGRAY);
 
 			DrawSidePanel(game);
+			
+			DrawBottomText();
 
 			game.Draw();
 

@@ -119,3 +119,9 @@ void DrawGameOver()
 	DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, 0.7f));
 	DrawOutlinedText(gameOverFont, "GAME OVER", { (15 + 400 + 250) / 2 - gameOverTextSize.x / 2, (15 + 800 + 15) / 2 - gameOverTextSize.y / 2 - 6}, gameOverFontSize, 5, BLACK, 4, WHITE);
 }
+
+void DrawBottomText()
+{
+	const char* BottomText = "Arrow Keys - Move; X/Z - Rotate; A - Rotate 180 Degrees;\nSpace - Drop; C - Hold; R - Reset";
+	DrawText(BottomText, 10, 825, 20, BLACK);
+}
